@@ -1,0 +1,4 @@
+<jboss-web>
+    <context-root>/apkanalyzer</context-root>
+    <!--<security-domain>ApkAnalyzerDomain</security-domain>-->
+</jboss-web>
