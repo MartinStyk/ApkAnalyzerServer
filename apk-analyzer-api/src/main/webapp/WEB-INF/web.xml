@@ -7,61 +7,41 @@
 
     <distributable/>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>restricted</web-resource-name>-->
-            <!--<url-pattern>/login/signUp.html</url-pattern>-->
-        <!--</web-resource-collection>-->
-        <!--&lt;!&ndash; OMIT auth-constraint &ndash;&gt;-->
-    <!--</security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>free</web-resource-name>
+            <url-pattern>apkanalyzer/api/appdata</url-pattern>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+    </security-constraint>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>restricted</web-resource-name>-->
-            <!--<url-pattern>/api/user/*</url-pattern>-->
-        <!--</web-resource-collection>-->
-        <!--&lt;!&ndash; OMIT auth-constraint &ndash;&gt;-->
-    <!--</security-constraint>-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>restricted</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>GET</http-method>
+        </web-resource-collection>
 
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>restricted</web-resource-name>-->
-            <!--<url-pattern>/*</url-pattern>-->
-        <!--</web-resource-collection>-->
+        <auth-constraint>
+            <role-name>ADMIN</role-name>
+            <role-name>USER</role-name>
+        </auth-constraint>
+    </security-constraint>
 
-        <!--<auth-constraint>-->
-            <!--<role-name>ADMIN</role-name>-->
-            <!--<role-name>USER</role-name>-->
-            <!--<role-name>SUPER_USER</role-name>-->
-        <!--</auth-constraint>-->
-    <!--</security-constraint>-->
-
-    <!--<security-constraint>-->
-        <!--<web-resource-collection>-->
-            <!--<web-resource-name>app</web-resource-name>-->
-            <!--<url-pattern>/partials/logout.html</url-pattern>-->
-        <!--</web-resource-collection>-->
-        <!--&lt;!&ndash; OMIT auth-constraint &ndash;&gt;-->
-    <!--</security-constraint>-->
-
-    <!--<login-config>-->
-        <!--<auth-method>FORM</auth-method>-->
-        <!--<realm-name>ApplicationRealm</realm-name>-->
-        <!--<form-login-config>-->
-            <!--<form-login-page>/login/login.html</form-login-page>-->
-            <!--<form-error-page>/login/error.html</form-error-page>-->
-        <!--</form-login-config>-->
-    <!--</login-config>-->
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>ApplicationRealm</realm-name>
+    </login-config>
 
     <!--<context-param>-->
         <!--<param-name>resteasy.role.based.security</param-name>-->
         <!--<param-value>true</param-value>-->
     <!--</context-param>-->
 
-    <!--<security-role>-->
-        <!--<role-name>ADMIN</role-name>-->
-    <!--</security-role>-->
-    <!--<security-role>-->
-        <!--<role-name>USER</role-name>-->
-    <!--</security-role>-->
+    <security-role>
+        <role-name>ADMIN</role-name>
+    </security-role>
+    <security-role>
+        <role-name>USER</role-name>
+    </security-role>
 </web-app>

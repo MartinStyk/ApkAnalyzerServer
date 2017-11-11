@@ -1,0 +1,16 @@
+# setup security domain in standalone configuration
+
+batch
+
+connect
+
+/subsystem=security/security-domain=ApkAnalyzerDomain:add(cache-type=default)
+
+/subsystem=security/security-domain=ApkAnalyzerDomain/authentication=classic:add( \
+login-modules=[{code=RealmDirect, flag=Required, \
+module-options={password-stacking=useFirstPass, \
+unauthenticatedIdentity=USER}}])
+
+run-batch
+
+reload

@@ -115,6 +115,22 @@
                 <configuration>
                     <skip>true</skip>
                     <serverConfig>standalone.xml</serverConfig>
+                    <scripts>
+                        <script>../config/security.cli</script>
+                    </scripts>
+                    <add-user>
+                        <users>
+                            <user>
+                                <username>admin</username>
+                                <password>user.1234</password>
+                                <groups>
+                                    <group>ADMIN</group>
+                                    <group>USER</group>
+                                </groups>
+                                <application-user>true</application-user>
+                            </user>
+                        </users>
+                    </add-user>
                 </configuration>
             </plugin>
         </plugins>
