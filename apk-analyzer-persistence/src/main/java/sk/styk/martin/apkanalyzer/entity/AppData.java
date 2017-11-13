@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.xml.crypto.Data;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
@@ -37,6 +36,9 @@ public class AppData {
     @NotEmpty
     @Column(nullable = false)
     private String androidId;
+
+    // Hash of data structure, can be used to identify two exactly same apps
+    private int hash;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -90,12 +92,16 @@ public class AppData {
     // Activities
     private int numberActivities;
 
+    private int activitiesAggregatedHash;
+
     @ElementCollection
     @CollectionTable(name = "Activities", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> activityNames;
 
     // Services
     private int numberServices;
+
+    private int servicesAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "Services", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -104,12 +110,16 @@ public class AppData {
     // Content Providers
     private int numberContentProviders;
 
+    private int contentProvidersAggregatedHash;
+
     @ElementCollection
     @CollectionTable(name = "ContentProviders", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> contentProviderNames;
 
     // Broadcast Receivers
     private int numberBroadcastReceivers;
+
+    private int broadcastReceiversAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "BroadcastReceivers", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -118,6 +128,8 @@ public class AppData {
     // Defined permissions
     private int numberDefinedPermissions;
 
+    private int definedPermissionsAggregatedHash;
+
     @ElementCollection
     @CollectionTable(name = "DefinedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> definedPermissions;
@@ -125,12 +137,16 @@ public class AppData {
     // Used permissions
     private int numberUsedPermissions;
 
+    private int usedPermissionsAggregatedHash;
+
     @ElementCollection
     @CollectionTable(name = "UsedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> usedPermissions;
 
     // Features
     private int numberFeatures;
+
+    private int featuresAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "Features", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -164,6 +180,14 @@ public class AppData {
     private int numberAssets;
 
     private int numberOthers;
+
+    private int drawablesAggregatedHash;
+
+    private int layoutsAggregatedHash;
+
+    private int assetsAggregatedHash;
+
+    private int otherAggregatedHash;
 
     //ResourceData
     private int numberDifferentDrawables;
@@ -203,7 +227,11 @@ public class AppData {
     @CollectionTable(name = "PackageClasses", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> packageClasses;
 
+    private int packageClassesAggregatedHash;
+
     private int numberPackageClasses;
+
+    private int otherClassesAggregatedHash;
 
     private int numberOtherClasses;
 
@@ -233,21 +261,33 @@ public class AppData {
 
         AppData appData = (AppData) o;
 
+        if (hash != appData.hash) return false;
         if (versionCode != appData.versionCode) return false;
         if (apkSize != appData.apkSize) return false;
         if (minSdkVersion != appData.minSdkVersion) return false;
         if (targetSdkVersion != appData.targetSdkVersion) return false;
         if (numberActivities != appData.numberActivities) return false;
+        if (activitiesAggregatedHash != appData.activitiesAggregatedHash) return false;
         if (numberServices != appData.numberServices) return false;
+        if (servicesAggregatedHash != appData.servicesAggregatedHash) return false;
         if (numberContentProviders != appData.numberContentProviders) return false;
+        if (contentProvidersAggregatedHash != appData.contentProvidersAggregatedHash) return false;
         if (numberBroadcastReceivers != appData.numberBroadcastReceivers) return false;
+        if (broadcastReceiversAggregatedHash != appData.broadcastReceiversAggregatedHash) return false;
         if (numberDefinedPermissions != appData.numberDefinedPermissions) return false;
+        if (definedPermissionsAggregatedHash != appData.definedPermissionsAggregatedHash) return false;
         if (numberUsedPermissions != appData.numberUsedPermissions) return false;
+        if (usedPermissionsAggregatedHash != appData.usedPermissionsAggregatedHash) return false;
         if (numberFeatures != appData.numberFeatures) return false;
+        if (featuresAggregatedHash != appData.featuresAggregatedHash) return false;
         if (numberDrawables != appData.numberDrawables) return false;
         if (numberLayouts != appData.numberLayouts) return false;
         if (numberAssets != appData.numberAssets) return false;
         if (numberOthers != appData.numberOthers) return false;
+        if (drawablesAggregatedHash != appData.drawablesAggregatedHash) return false;
+        if (layoutsAggregatedHash != appData.layoutsAggregatedHash) return false;
+        if (assetsAggregatedHash != appData.assetsAggregatedHash) return false;
+        if (otherAggregatedHash != appData.otherAggregatedHash) return false;
         if (numberDifferentDrawables != appData.numberDifferentDrawables) return false;
         if (numberDifferentLayouts != appData.numberDifferentLayouts) return false;
         if (pngDrawables != appData.pngDrawables) return false;
@@ -264,8 +304,12 @@ public class AppData {
         if (nodpiDrawables != appData.nodpiDrawables) return false;
         if (tvdpiDrawables != appData.tvdpiDrawables) return false;
         if (unspecifiedDpiDrawables != appData.unspecifiedDpiDrawables) return false;
+        if (packageClassesAggregatedHash != appData.packageClassesAggregatedHash) return false;
         if (numberPackageClasses != appData.numberPackageClasses) return false;
+        if (otherClassesAggregatedHash != appData.otherClassesAggregatedHash) return false;
         if (numberOtherClasses != appData.numberOtherClasses) return false;
+        if (id != null ? !id.equals(appData.id) : appData.id != null) return false;
+        if (uploadTime != null ? !uploadTime.equals(appData.uploadTime) : appData.uploadTime != null) return false;
         if (androidId != null ? !androidId.equals(appData.androidId) : appData.androidId != null) return false;
         if (analysisMode != appData.analysisMode) return false;
         if (packageName != null ? !packageName.equals(appData.packageName) : appData.packageName != null) return false;
@@ -319,7 +363,10 @@ public class AppData {
 
     @Override
     public int hashCode() {
-        int result = androidId != null ? androidId.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (uploadTime != null ? uploadTime.hashCode() : 0);
+        result = 31 * result + (androidId != null ? androidId.hashCode() : 0);
+        result = 31 * result + hash;
         result = 31 * result + (analysisMode != null ? analysisMode.hashCode() : 0);
         result = 31 * result + (packageName != null ? packageName.hashCode() : 0);
         result = 31 * result + (applicationName != null ? applicationName.hashCode() : 0);
@@ -342,18 +389,25 @@ public class AppData {
         result = 31 * result + (subjectOrganization != null ? subjectOrganization.hashCode() : 0);
         result = 31 * result + (subjectCountry != null ? subjectCountry.hashCode() : 0);
         result = 31 * result + numberActivities;
+        result = 31 * result + activitiesAggregatedHash;
         result = 31 * result + (activityNames != null ? activityNames.hashCode() : 0);
         result = 31 * result + numberServices;
+        result = 31 * result + servicesAggregatedHash;
         result = 31 * result + (serviceNames != null ? serviceNames.hashCode() : 0);
         result = 31 * result + numberContentProviders;
+        result = 31 * result + contentProvidersAggregatedHash;
         result = 31 * result + (contentProviderNames != null ? contentProviderNames.hashCode() : 0);
         result = 31 * result + numberBroadcastReceivers;
+        result = 31 * result + broadcastReceiversAggregatedHash;
         result = 31 * result + (broadcastReceiverNames != null ? broadcastReceiverNames.hashCode() : 0);
         result = 31 * result + numberDefinedPermissions;
+        result = 31 * result + definedPermissionsAggregatedHash;
         result = 31 * result + (definedPermissions != null ? definedPermissions.hashCode() : 0);
         result = 31 * result + numberUsedPermissions;
+        result = 31 * result + usedPermissionsAggregatedHash;
         result = 31 * result + (usedPermissions != null ? usedPermissions.hashCode() : 0);
         result = 31 * result + numberFeatures;
+        result = 31 * result + featuresAggregatedHash;
         result = 31 * result + (featureNames != null ? featureNames.hashCode() : 0);
         result = 31 * result + (dexHash != null ? dexHash.hashCode() : 0);
         result = 31 * result + (arscHash != null ? arscHash.hashCode() : 0);
@@ -365,6 +419,10 @@ public class AppData {
         result = 31 * result + numberLayouts;
         result = 31 * result + numberAssets;
         result = 31 * result + numberOthers;
+        result = 31 * result + drawablesAggregatedHash;
+        result = 31 * result + layoutsAggregatedHash;
+        result = 31 * result + assetsAggregatedHash;
+        result = 31 * result + otherAggregatedHash;
         result = 31 * result + numberDifferentDrawables;
         result = 31 * result + numberDifferentLayouts;
         result = 31 * result + pngDrawables;
@@ -382,7 +440,9 @@ public class AppData {
         result = 31 * result + tvdpiDrawables;
         result = 31 * result + unspecifiedDpiDrawables;
         result = 31 * result + (packageClasses != null ? packageClasses.hashCode() : 0);
+        result = 31 * result + packageClassesAggregatedHash;
         result = 31 * result + numberPackageClasses;
+        result = 31 * result + otherClassesAggregatedHash;
         result = 31 * result + numberOtherClasses;
         return result;
     }
@@ -390,7 +450,10 @@ public class AppData {
     @Override
     public String toString() {
         return "AppData{" +
-                "androidId='" + androidId + '\'' +
+                "id=" + id +
+                ", uploadTime=" + uploadTime +
+                ", androidId='" + androidId + '\'' +
+                ", hash=" + hash +
                 ", analysisMode=" + analysisMode +
                 ", packageName='" + packageName + '\'' +
                 ", applicationName='" + applicationName + '\'' +
@@ -413,18 +476,25 @@ public class AppData {
                 ", subjectOrganization='" + subjectOrganization + '\'' +
                 ", subjectCountry='" + subjectCountry + '\'' +
                 ", numberActivities=" + numberActivities +
+                ", activitiesAggregatedHash=" + activitiesAggregatedHash +
                 ", activityNames=" + activityNames +
                 ", numberServices=" + numberServices +
+                ", servicesAggregatedHash=" + servicesAggregatedHash +
                 ", serviceNames=" + serviceNames +
                 ", numberContentProviders=" + numberContentProviders +
+                ", contentProvidersAggregatedHash=" + contentProvidersAggregatedHash +
                 ", contentProviderNames=" + contentProviderNames +
                 ", numberBroadcastReceivers=" + numberBroadcastReceivers +
+                ", broadcastReceiversAggregatedHash=" + broadcastReceiversAggregatedHash +
                 ", broadcastReceiverNames=" + broadcastReceiverNames +
                 ", numberDefinedPermissions=" + numberDefinedPermissions +
+                ", definedPermissionsAggregatedHash=" + definedPermissionsAggregatedHash +
                 ", definedPermissions=" + definedPermissions +
                 ", numberUsedPermissions=" + numberUsedPermissions +
+                ", usedPermissionsAggregatedHash=" + usedPermissionsAggregatedHash +
                 ", usedPermissions=" + usedPermissions +
                 ", numberFeatures=" + numberFeatures +
+                ", featuresAggregatedHash=" + featuresAggregatedHash +
                 ", featureNames=" + featureNames +
                 ", dexHash='" + dexHash + '\'' +
                 ", arscHash='" + arscHash + '\'' +
@@ -436,6 +506,10 @@ public class AppData {
                 ", numberLayouts=" + numberLayouts +
                 ", numberAssets=" + numberAssets +
                 ", numberOthers=" + numberOthers +
+                ", drawablesAggregatedHash=" + drawablesAggregatedHash +
+                ", layoutsAggregatedHash=" + layoutsAggregatedHash +
+                ", assetsAggregatedHash=" + assetsAggregatedHash +
+                ", otherAggregatedHash=" + otherAggregatedHash +
                 ", numberDifferentDrawables=" + numberDifferentDrawables +
                 ", numberDifferentLayouts=" + numberDifferentLayouts +
                 ", pngDrawables=" + pngDrawables +
@@ -453,7 +527,9 @@ public class AppData {
                 ", tvdpiDrawables=" + tvdpiDrawables +
                 ", unspecifiedDpiDrawables=" + unspecifiedDpiDrawables +
                 ", packageClasses=" + packageClasses +
+                ", packageClassesAggregatedHash=" + packageClassesAggregatedHash +
                 ", numberPackageClasses=" + numberPackageClasses +
+                ", otherClassesAggregatedHash=" + otherClassesAggregatedHash +
                 ", numberOtherClasses=" + numberOtherClasses +
                 '}';
     }
@@ -516,6 +592,118 @@ public class AppData {
 
     public int getVersionCode() {
         return versionCode;
+    }
+
+    public int getHash() {
+        return hash;
+    }
+
+    public void setHash(int hash) {
+        this.hash = hash;
+    }
+
+    public int getActivitiesAggregatedHash() {
+        return activitiesAggregatedHash;
+    }
+
+    public void setActivitiesAggregatedHash(int activitiesAggregatedHash) {
+        this.activitiesAggregatedHash = activitiesAggregatedHash;
+    }
+
+    public int getServicesAggregatedHash() {
+        return servicesAggregatedHash;
+    }
+
+    public void setServicesAggregatedHash(int servicesAggregatedHash) {
+        this.servicesAggregatedHash = servicesAggregatedHash;
+    }
+
+    public int getContentProvidersAggregatedHash() {
+        return contentProvidersAggregatedHash;
+    }
+
+    public void setContentProvidersAggregatedHash(int contentProvidersAggregatedHash) {
+        this.contentProvidersAggregatedHash = contentProvidersAggregatedHash;
+    }
+
+    public int getBroadcastReceiversAggregatedHash() {
+        return broadcastReceiversAggregatedHash;
+    }
+
+    public void setBroadcastReceiversAggregatedHash(int broadcastReceiversAggregatedHash) {
+        this.broadcastReceiversAggregatedHash = broadcastReceiversAggregatedHash;
+    }
+
+    public int getDefinedPermissionsAggregatedHash() {
+        return definedPermissionsAggregatedHash;
+    }
+
+    public void setDefinedPermissionsAggregatedHash(int definedPermissionsAggregatedHash) {
+        this.definedPermissionsAggregatedHash = definedPermissionsAggregatedHash;
+    }
+
+    public int getUsedPermissionsAggregatedHash() {
+        return usedPermissionsAggregatedHash;
+    }
+
+    public void setUsedPermissionsAggregatedHash(int usedPermissionsAggregatedHash) {
+        this.usedPermissionsAggregatedHash = usedPermissionsAggregatedHash;
+    }
+
+    public int getFeaturesAggregatedHash() {
+        return featuresAggregatedHash;
+    }
+
+    public void setFeaturesAggregatedHash(int featuresAggregatedHash) {
+        this.featuresAggregatedHash = featuresAggregatedHash;
+    }
+
+    public int getDrawablesAggregatedHash() {
+        return drawablesAggregatedHash;
+    }
+
+    public void setDrawablesAggregatedHash(int drawablesAggregatedHash) {
+        this.drawablesAggregatedHash = drawablesAggregatedHash;
+    }
+
+    public int getLayoutsAggregatedHash() {
+        return layoutsAggregatedHash;
+    }
+
+    public void setLayoutsAggregatedHash(int layoutsAggregatedHash) {
+        this.layoutsAggregatedHash = layoutsAggregatedHash;
+    }
+
+    public int getAssetsAggregatedHash() {
+        return assetsAggregatedHash;
+    }
+
+    public void setAssetsAggregatedHash(int assetsAggregatedHash) {
+        this.assetsAggregatedHash = assetsAggregatedHash;
+    }
+
+    public int getOtherAggregatedHash() {
+        return otherAggregatedHash;
+    }
+
+    public void setOtherAggregatedHash(int otherAggregatedHash) {
+        this.otherAggregatedHash = otherAggregatedHash;
+    }
+
+    public int getPackageClassesAggregatedHash() {
+        return packageClassesAggregatedHash;
+    }
+
+    public void setPackageClassesAggregatedHash(int packageClassesAggregatedHash) {
+        this.packageClassesAggregatedHash = packageClassesAggregatedHash;
+    }
+
+    public int getOtherClassesAggregatedHash() {
+        return otherClassesAggregatedHash;
+    }
+
+    public void setOtherClassesAggregatedHash(int otherClassesAggregatedHash) {
+        this.otherClassesAggregatedHash = otherClassesAggregatedHash;
     }
 
     public void setVersionCode(int versionCode) {
