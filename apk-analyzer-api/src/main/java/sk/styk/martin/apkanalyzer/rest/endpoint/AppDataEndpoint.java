@@ -48,8 +48,13 @@ public class AppDataEndpoint {
     public Response create(AppData data) {
         Response.ResponseBuilder builder;
         try {
-            AppData created = appDataService.create(data);
-            builder = Response.ok(created);
+            AppData created = appDataService.createWithExistenceCheck(data);
+            if (created != null) {
+                builder = Response.ok(created);
+            } else {
+                builder = Response.status(Response.Status.CONFLICT);
+            }
+
         } catch (Exception e) {
             builder = Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage());
         }

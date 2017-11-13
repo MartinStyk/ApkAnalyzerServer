@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface AppDataService extends GenericCRUDService<AppData, Long> {
 
+    AppData createWithExistenceCheck(AppData appData);
+
     List<AppData> findByDevice(String deviceId);
 }

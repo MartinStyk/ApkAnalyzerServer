@@ -14,6 +14,9 @@ public class AppDataServiceImpl implements AppDataService {
     private AppDataDao appDataDao;
 
     @Inject
+    private DuplicateUploadDetectionService duplicateDetectionService;
+
+    @Inject
     private TimeService timeService;
 
     @Override
@@ -21,6 +24,11 @@ public class AppDataServiceImpl implements AppDataService {
         appData.setUploadTime(timeService.getCurrentDate());
         AppData created = appDataDao.create(appData);
         return created;
+    }
+
+    @Override
+    public AppData createWithExistenceCheck(AppData appData) {
+        return duplicateDetectionService.isAlreadyUploaded(appData) ? null : create(appData);
     }
 
     @Override

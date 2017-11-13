@@ -8,4 +8,7 @@ import java.util.List;
 public interface AppDataDao extends GenericDao<AppData, Long> {
 
     List<AppData> getForDevice(@NotEmpty String deviceId);
+
+    AppData find(@NotEmpty String deviceId,int dataHash);
+
 }
