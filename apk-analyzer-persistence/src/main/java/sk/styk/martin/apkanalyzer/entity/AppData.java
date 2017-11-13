@@ -73,7 +73,7 @@ public class AppData {
 
     private String certMd5;
 
-    private BigInteger serialNumber;
+    private int serialNumber;
 
     private String issuerName;
 
@@ -280,8 +280,7 @@ public class AppData {
         if (publicKeyMd5 != null ? !publicKeyMd5.equals(appData.publicKeyMd5) : appData.publicKeyMd5 != null)
             return false;
         if (certMd5 != null ? !certMd5.equals(appData.certMd5) : appData.certMd5 != null) return false;
-        if (serialNumber != null ? !serialNumber.equals(appData.serialNumber) : appData.serialNumber != null)
-            return false;
+        if (serialNumber != appData.serialNumber) return false;
         if (issuerName != null ? !issuerName.equals(appData.issuerName) : appData.issuerName != null) return false;
         if (issuerOrganization != null ? !issuerOrganization.equals(appData.issuerOrganization) : appData.issuerOrganization != null)
             return false;
@@ -335,7 +334,7 @@ public class AppData {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (publicKeyMd5 != null ? publicKeyMd5.hashCode() : 0);
         result = 31 * result + (certMd5 != null ? certMd5.hashCode() : 0);
-        result = 31 * result + (serialNumber != null ? serialNumber.hashCode() : 0);
+        result = 31 * result + serialNumber;
         result = 31 * result + (issuerName != null ? issuerName.hashCode() : 0);
         result = 31 * result + (issuerOrganization != null ? issuerOrganization.hashCode() : 0);
         result = 31 * result + (issuerCountry != null ? issuerCountry.hashCode() : 0);
@@ -595,11 +594,11 @@ public class AppData {
         this.certMd5 = certMd5;
     }
 
-    public BigInteger getSerialNumber() {
+    public int getSerialNumber() {
         return serialNumber;
     }
 
-    public void setSerialNumber(BigInteger serialNumber) {
+    public void setSerialNumber(int serialNumber) {
         this.serialNumber = serialNumber;
     }
 
