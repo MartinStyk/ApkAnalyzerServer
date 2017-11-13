@@ -15,8 +15,9 @@
     </modules>
 
     <properties>
-        <!--keep in alphabetical order please-->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <hibernate.strategy>update</hibernate.strategy>
 
         <version.com.fasterxml.jackson.core>2.7.4</version.com.fasterxml.jackson.core>
         <version.maven.compiler.plugin>3.6.1</version.maven.compiler.plugin>
