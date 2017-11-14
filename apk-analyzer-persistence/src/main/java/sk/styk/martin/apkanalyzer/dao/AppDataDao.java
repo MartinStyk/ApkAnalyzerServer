@@ -1,6 +1,7 @@
 package sk.styk.martin.apkanalyzer.dao;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import sk.styk.martin.apkanalyzer.dao.generic.GenericDao;
 import sk.styk.martin.apkanalyzer.entity.AppData;
 
 import java.util.List;
