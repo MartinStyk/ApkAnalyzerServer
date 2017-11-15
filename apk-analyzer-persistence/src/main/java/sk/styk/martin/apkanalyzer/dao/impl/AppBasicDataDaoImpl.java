@@ -27,9 +27,9 @@ public class AppBasicDataDaoImpl extends GenericQueryableDaoImpl<AppBasicData, L
               "a.versionName,a.versionCode, a.source, a.apkSize, " +
               "a.minSdkVersion, a.targetSdkVersion, a.certMd5, a.numberActivities, " +
               "a.activitiesAggregatedHash, a.numberServices, a.servicesAggregatedHash, " +
-              "a.numberContentProviders, a.contentProvidersAggregatedHash, a.numberBroadcastReceivers," +
-              "a.broadcastReceiversAggregatedHash,a.numberDefinedPermissions,a.definedPermissionsAggregatedHash," +
-              "a.numberUsedPermissions, a.usedPermissionsAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
+              "a.numberContentProviders, a.providersAggregatedHash, a.numberBroadcastReceivers," +
+              "a.receiversAggregatedHash,a.numberDefinedPermissions,a.definedPermAggregatedHash," +
+              "a.numberUsedPermissions, a.usedPermAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
               "a.dexHash, a.arscHash, a.numberDrawables, a.numberLayouts,a.numberAssets, a.numberOthers, " +
               "a.drawablesAggregatedHash, a.layoutsAggregatedHash, a.assetsAggregatedHash, a.otherAggregatedHash, " +
               "a.numberDifferentDrawables, a.numberDifferentLayouts,a.packageClassesAggregatedHash, " +
@@ -52,9 +52,9 @@ public class AppBasicDataDaoImpl extends GenericQueryableDaoImpl<AppBasicData, L
               "a.versionName,a.versionCode, a.source, a.apkSize, " +
               "a.minSdkVersion, a.targetSdkVersion, a.certMd5, a.numberActivities, " +
               "a.activitiesAggregatedHash, a.numberServices, a.servicesAggregatedHash, " +
-              "a.numberContentProviders, a.contentProvidersAggregatedHash, a.numberBroadcastReceivers," +
-              "a.broadcastReceiversAggregatedHash,a.numberDefinedPermissions,a.definedPermissionsAggregatedHash," +
-              "a.numberUsedPermissions, a.usedPermissionsAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
+              "a.numberContentProviders, a.providersAggregatedHash, a.numberBroadcastReceivers," +
+              "a.receiversAggregatedHash,a.numberDefinedPermissions,a.definedPermAggregatedHash," +
+              "a.numberUsedPermissions, a.usedPermAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
               "a.dexHash, a.arscHash, a.numberDrawables, a.numberLayouts,a.numberAssets, a.numberOthers, " +
               "a.drawablesAggregatedHash, a.layoutsAggregatedHash, a.assetsAggregatedHash, a.otherAggregatedHash, " +
               "a.numberDifferentDrawables, a.numberDifferentLayouts,a.packageClassesAggregatedHash, " +
@@ -72,9 +72,9 @@ public class AppBasicDataDaoImpl extends GenericQueryableDaoImpl<AppBasicData, L
               "a.versionName,a.versionCode, a.source, a.apkSize, " +
               "a.minSdkVersion, a.targetSdkVersion, a.certMd5, a.numberActivities, " +
               "a.activitiesAggregatedHash, a.numberServices, a.servicesAggregatedHash, " +
-              "a.numberContentProviders, a.contentProvidersAggregatedHash, a.numberBroadcastReceivers," +
-              "a.broadcastReceiversAggregatedHash,a.numberDefinedPermissions,a.definedPermissionsAggregatedHash," +
-              "a.numberUsedPermissions, a.usedPermissionsAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
+              "a.numberContentProviders, a.providersAggregatedHash, a.numberBroadcastReceivers," +
+              "a.receiversAggregatedHash,a.numberDefinedPermissions,a.definedPermAggregatedHash," +
+              "a.numberUsedPermissions, a.usedPermAggregatedHash,a.numberFeatures, a.featuresAggregatedHash," +
               "a.dexHash, a.arscHash, a.numberDrawables, a.numberLayouts,a.numberAssets, a.numberOthers, " +
               "a.drawablesAggregatedHash, a.layoutsAggregatedHash, a.assetsAggregatedHash, a.otherAggregatedHash, " +
               "a.numberDifferentDrawables, a.numberDifferentLayouts,a.packageClassesAggregatedHash, " +
