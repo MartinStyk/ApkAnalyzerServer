@@ -30,7 +30,7 @@
             <!-- Properties for Hibernate -->
             <property name="hibernate.hbm2ddl.auto" value="${hibernate.strategy}"/>
             <!--<property name="hibernate.hbm2ddl.auto" value="create"/>-->
-            <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.Oracle12cDialect" />
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.search.default.directory_provider" value="filesystem"/>

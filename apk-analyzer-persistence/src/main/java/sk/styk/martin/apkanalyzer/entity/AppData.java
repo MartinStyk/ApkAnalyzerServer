@@ -14,7 +14,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -110,7 +109,7 @@ public class AppData {
     // Content Providers
     private int numberContentProviders;
 
-    private int contentProvidersAggregatedHash;
+    private int providersAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "ContentProviders", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -119,7 +118,7 @@ public class AppData {
     // Broadcast Receivers
     private int numberBroadcastReceivers;
 
-    private int broadcastReceiversAggregatedHash;
+    private int receiversAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "BroadcastReceivers", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -128,7 +127,7 @@ public class AppData {
     // Defined permissions
     private int numberDefinedPermissions;
 
-    private int definedPermissionsAggregatedHash;
+    private int definedPermAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "DefinedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -137,7 +136,7 @@ public class AppData {
     // Used permissions
     private int numberUsedPermissions;
 
-    private int usedPermissionsAggregatedHash;
+    private int usedPermAggregatedHash;
 
     @ElementCollection
     @CollectionTable(name = "UsedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
@@ -271,13 +270,13 @@ public class AppData {
         if (numberServices != appData.numberServices) return false;
         if (servicesAggregatedHash != appData.servicesAggregatedHash) return false;
         if (numberContentProviders != appData.numberContentProviders) return false;
-        if (contentProvidersAggregatedHash != appData.contentProvidersAggregatedHash) return false;
+        if (providersAggregatedHash != appData.providersAggregatedHash) return false;
         if (numberBroadcastReceivers != appData.numberBroadcastReceivers) return false;
-        if (broadcastReceiversAggregatedHash != appData.broadcastReceiversAggregatedHash) return false;
+        if (receiversAggregatedHash != appData.receiversAggregatedHash) return false;
         if (numberDefinedPermissions != appData.numberDefinedPermissions) return false;
-        if (definedPermissionsAggregatedHash != appData.definedPermissionsAggregatedHash) return false;
+        if (definedPermAggregatedHash != appData.definedPermAggregatedHash) return false;
         if (numberUsedPermissions != appData.numberUsedPermissions) return false;
-        if (usedPermissionsAggregatedHash != appData.usedPermissionsAggregatedHash) return false;
+        if (usedPermAggregatedHash != appData.usedPermAggregatedHash) return false;
         if (numberFeatures != appData.numberFeatures) return false;
         if (featuresAggregatedHash != appData.featuresAggregatedHash) return false;
         if (numberDrawables != appData.numberDrawables) return false;
@@ -395,16 +394,16 @@ public class AppData {
         result = 31 * result + servicesAggregatedHash;
         result = 31 * result + (serviceNames != null ? serviceNames.hashCode() : 0);
         result = 31 * result + numberContentProviders;
-        result = 31 * result + contentProvidersAggregatedHash;
+        result = 31 * result + providersAggregatedHash;
         result = 31 * result + (contentProviderNames != null ? contentProviderNames.hashCode() : 0);
         result = 31 * result + numberBroadcastReceivers;
-        result = 31 * result + broadcastReceiversAggregatedHash;
+        result = 31 * result + receiversAggregatedHash;
         result = 31 * result + (broadcastReceiverNames != null ? broadcastReceiverNames.hashCode() : 0);
         result = 31 * result + numberDefinedPermissions;
-        result = 31 * result + definedPermissionsAggregatedHash;
+        result = 31 * result + definedPermAggregatedHash;
         result = 31 * result + (definedPermissions != null ? definedPermissions.hashCode() : 0);
         result = 31 * result + numberUsedPermissions;
-        result = 31 * result + usedPermissionsAggregatedHash;
+        result = 31 * result + usedPermAggregatedHash;
         result = 31 * result + (usedPermissions != null ? usedPermissions.hashCode() : 0);
         result = 31 * result + numberFeatures;
         result = 31 * result + featuresAggregatedHash;
@@ -482,16 +481,16 @@ public class AppData {
                 ", servicesAggregatedHash=" + servicesAggregatedHash +
                 ", serviceNames=" + serviceNames +
                 ", numberContentProviders=" + numberContentProviders +
-                ", contentProvidersAggregatedHash=" + contentProvidersAggregatedHash +
+                ", providersAggregatedHash=" + providersAggregatedHash +
                 ", contentProviderNames=" + contentProviderNames +
                 ", numberBroadcastReceivers=" + numberBroadcastReceivers +
-                ", broadcastReceiversAggregatedHash=" + broadcastReceiversAggregatedHash +
+                ", receiversAggregatedHash=" + receiversAggregatedHash +
                 ", broadcastReceiverNames=" + broadcastReceiverNames +
                 ", numberDefinedPermissions=" + numberDefinedPermissions +
-                ", definedPermissionsAggregatedHash=" + definedPermissionsAggregatedHash +
+                ", definedPermAggregatedHash=" + definedPermAggregatedHash +
                 ", definedPermissions=" + definedPermissions +
                 ", numberUsedPermissions=" + numberUsedPermissions +
-                ", usedPermissionsAggregatedHash=" + usedPermissionsAggregatedHash +
+                ", usedPermAggregatedHash=" + usedPermAggregatedHash +
                 ", usedPermissions=" + usedPermissions +
                 ", numberFeatures=" + numberFeatures +
                 ", featuresAggregatedHash=" + featuresAggregatedHash +
@@ -618,36 +617,36 @@ public class AppData {
         this.servicesAggregatedHash = servicesAggregatedHash;
     }
 
-    public int getContentProvidersAggregatedHash() {
-        return contentProvidersAggregatedHash;
+    public int getProvidersAggregatedHash() {
+        return providersAggregatedHash;
     }
 
-    public void setContentProvidersAggregatedHash(int contentProvidersAggregatedHash) {
-        this.contentProvidersAggregatedHash = contentProvidersAggregatedHash;
+    public void setProvidersAggregatedHash(int providersAggregatedHash) {
+        this.providersAggregatedHash = providersAggregatedHash;
     }
 
-    public int getBroadcastReceiversAggregatedHash() {
-        return broadcastReceiversAggregatedHash;
+    public int getReceiversAggregatedHash() {
+        return receiversAggregatedHash;
     }
 
-    public void setBroadcastReceiversAggregatedHash(int broadcastReceiversAggregatedHash) {
-        this.broadcastReceiversAggregatedHash = broadcastReceiversAggregatedHash;
+    public void setReceiversAggregatedHash(int receiversAggregatedHash) {
+        this.receiversAggregatedHash = receiversAggregatedHash;
     }
 
-    public int getDefinedPermissionsAggregatedHash() {
-        return definedPermissionsAggregatedHash;
+    public int getDefinedPermAggregatedHash() {
+        return definedPermAggregatedHash;
     }
 
-    public void setDefinedPermissionsAggregatedHash(int definedPermissionsAggregatedHash) {
-        this.definedPermissionsAggregatedHash = definedPermissionsAggregatedHash;
+    public void setDefinedPermAggregatedHash(int definedPermAggregatedHash) {
+        this.definedPermAggregatedHash = definedPermAggregatedHash;
     }
 
-    public int getUsedPermissionsAggregatedHash() {
-        return usedPermissionsAggregatedHash;
+    public int getUsedPermAggregatedHash() {
+        return usedPermAggregatedHash;
     }
 
-    public void setUsedPermissionsAggregatedHash(int usedPermissionsAggregatedHash) {
-        this.usedPermissionsAggregatedHash = usedPermissionsAggregatedHash;
+    public void setUsedPermAggregatedHash(int usedPermAggregatedHash) {
+        this.usedPermAggregatedHash = usedPermAggregatedHash;
     }
 
     public int getFeaturesAggregatedHash() {
