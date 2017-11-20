@@ -1,0 +1,240 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Dec 3, 2016, 12:09:34 AM
+    Author     : Adam
+*/
+.allow-vertical-space {
+    margin-top: 1em;
+    margin-bottom: 1em;    
+}
+
+.allow-horizontal-space {
+    margin-left: 1em;
+    margin-right: 1em;    
+}
+
+.btn-jumbotron {
+    margin-bottom: -1em;
+}
+.dropdown-menu .btn-primary{
+    width: auto;
+    padding: 8px;
+    text-align: center;
+    margin-top: 10px;
+    font-size: small;
+}
+
+.glyphicon-remove {
+    color: darkred;
+}
+
+dl.dl-horizontal > dd, dt{
+    line-height: 2em;
+}
+
+td.lead-column {
+    font-weight:  bolder;
+}
+
+.navbar-brand{
+    font-weight: bold;
+}
+
+/* Login form styles
+-------------------------------------------------- */
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+    margin-bottom: 10px;
+}
+.form-signin .checkbox {
+    font-weight: normal;
+}
+.form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+}
+.form-signin .form-control:focus {
+    z-index: 2;
+}
+.form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+img.invalid-login-img {
+    max-height: 200px;
+    margin-top: 6em;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+.body{
+    background-image: url("../img/pattern.jpg");
+    background-repeat: repeat-x;
+}
+
+footer .container .text-muted {
+    margin: 20px 0;
+}
+
+#loginForm {
+    margin: auto;
+    max-width: 200px;
+    padding: 10px;
+}
+
+/* Login button in navbar */
+#navLogin {
+    position: relative;
+}
+
+#navLogin .glyphicon-user {
+    position: relative;
+    top: 4px;
+    font-size: 14px;
+    left: -5px;
+}
+
+#navLogin .userName {
+    margin-right: 2px;
+}
+
+/* Navbar custom edits */
+.navbar-header {
+    width: 100%
+}
+
+.navbar-toggle{
+    margin-left: 30px;
+}
+
+#menuLogin .dropdown-menu{
+    background: #FFF;
+}
+
+
+#menuLogin .userEmail, #menuLogin .fullName {
+    font-weight: bold;
+}
+
+.updateBtn, .createBtn{
+    width: 190px;
+}
+
+/* Musician radiobuttons padding */
+
+.musicianRadio {
+    padding-top: 5px;
+}
+
+/* XS sized displays padding */
+.jumbotron{
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.allBurnCalories .panel-body a{
+    display: block;
+    margin: 15px 0;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.panel-body span{
+    margin: auto;
+    padding: 10px;
+    font-weight: bold;
+}
+
+.homepagePanels .glyphicon-music {
+    font-size: 20px;
+}
+
+.homepagePanels .panel-title{
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.homepagePanels .panel-title .icon{
+    margin-right: 5px;
+    width: 150px;
+    height: 150px;
+}
+
+
+.homepage.jumbotron h1{
+    font-size: 53px;
+    margin-bottom: 40px;
+}
+.homepage.jumbotron .lead{
+    margin-bottom: 80px;
+}
+
+select {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -webkit-padding-end: 20px;
+    -moz-padding-end: 20px;
+    -webkit-padding-start: 2px;
+    -moz-padding-start: 2px;
+    background-color: #F07575; /* fallback color if gradients are not supported */
+    background-image: url(../images/select-arrow.png), -webkit-linear-gradient(top, #E5E5E5, #F4F4F4); /* For Chrome and Safari */
+    background-image: url(../images/select-arrow.png), -moz-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Fx (3.6 to 15) */
+    background-image: url(../images/select-arrow.png), -ms-linear-gradient(top, #E5E5E5, #F4F4F4); /* For pre-releases of IE 10*/
+    background-image: url(../images/select-arrow.png), -o-linear-gradient(top, #E5E5E5, #F4F4F4); /* For old Opera (11.1 to 12.0) */
+    background-image: url(../images/select-arrow.png), linear-gradient(to bottom, #E5E5E5, #F4F4F4); /* Standard syntax; must be last */
+    background-position: center right;
+    background-repeat: no-repeat;
+    border: 1px solid #AAA;
+    border-radius: 2px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+    color: #555;
+    font-size: inherit;
+    margin: 0;
+    overflow: hidden;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width:50%;
+    align:center;
+}
