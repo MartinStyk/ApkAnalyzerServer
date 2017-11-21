@@ -15,6 +15,8 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Configuration class used to setup persistence application context
@@ -27,6 +29,8 @@ import javax.sql.DataSource;
 @EnableJpaRepositories
 @ComponentScan(basePackages = "sk.styk.martin.apkanalyzer.dao")
 public class PersistenceApplicationContext {
+
+    public final String DATABASE_URL = System.getProperty("DATABASE_URL");
 
     @Bean
     public JpaTransactionManager transactionManager() {
@@ -57,14 +61,35 @@ public class PersistenceApplicationContext {
     @Bean
     @Primary
     public DataSource db() {
-        return DataSourceBuilder
-                .create()
-                .username("postgres")
-                .password("admin")
-                .url("jdbc:postgresql://localhost:5432")
-                .driverClassName("org.postgresql.Driver")
-                .build();
+
+        if (DATABASE_URL == null) {
+
+            return DataSourceBuilder
+                    .create()
+                    .username("postgres")
+                    .password("admin")
+                    .url("jdbc:postgresql://localhost:5432")
+                    .driverClassName("org.postgresql.Driver")
+                    .build();
+        } else {
+            URL url = null;
+            try {
+                url = new URL(DATABASE_URL);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            return DataSourceBuilder
+                    .create()
+                    .url("jdbc:postgresql://" + url.getHost() + ':' + url.getPort() + url.getPath())
+                    .username(url.getUserInfo().split(":")[0])
+                    .password(url.getUserInfo().split(":")[1])
+                    .driverClassName("org.postgresql.Driver")
+                    .build();
+        }
+
     }
+
 
     @Bean
     public PersistenceExceptionTranslationPostProcessor postProcessor() {
