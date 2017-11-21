@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import sk.styk.martin.apkanalyzer.dto.AppDataDto;
 import sk.styk.martin.apkanalyzer.entity.AppData;
 import sk.styk.martin.apkanalyzer.facade.AppDataFacade;
 import sk.styk.martin.apkanalyzer.rest.exception.ConflictException;
@@ -32,8 +33,8 @@ public class AppDataEndpoint {
     private AppDataFacade appDataFacade;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<AppData> get(@RequestParam(value = "device", required = false) String deviceId) {
-        List<AppData> data;
+    public List<AppDataDto> get(@RequestParam(value = "device", required = false) String deviceId) {
+        List<AppDataDto> data;
         if (deviceId == null) {
             data = appDataFacade.findAll();
         } else {
@@ -43,14 +44,14 @@ public class AppDataEndpoint {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public AppData get(@PathVariable("id") long id) {
+    public AppDataDto get(@PathVariable("id") long id) {
         return appDataFacade.findById(id);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public AppData create(@RequestBody AppData data) {
-        AppData created = appDataFacade.createWithExistenceCheck(data);
+    public AppDataDto create(@RequestBody AppDataDto data) {
+        AppDataDto created = appDataFacade.createWithExistenceCheck(data);
         if (created != null) {
             return created;
         } else {

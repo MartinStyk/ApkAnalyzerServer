@@ -33,7 +33,7 @@ import java.util.Locale;
  */
 @Configuration
 @EnableWebMvc
-@Import({ServiceConfiguration.class})
+@Import({ServiceConfiguration.class, SecurityConfiguration.class})
 @ComponentScan(basePackageClasses = AppDataEndpoint.class)
 public class RestContextConfiguration extends WebMvcConfigurerAdapter {
 

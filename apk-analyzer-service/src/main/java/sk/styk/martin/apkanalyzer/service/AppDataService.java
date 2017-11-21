@@ -10,7 +10,7 @@ public interface AppDataService {
 
     AppData update(AppData entity);
 
-    void remove(AppData entity);
+    void remove(Long id);
 
     AppData findById(Long id);
 

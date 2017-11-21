@@ -1,5 +1,6 @@
 package sk.styk.martin.apkanalyzer.facade;
 
+import sk.styk.martin.apkanalyzer.dto.AppDataDto;
 import sk.styk.martin.apkanalyzer.entity.AppData;
 
 import java.util.List;
@@ -9,17 +10,17 @@ import java.util.List;
  * @version 21.11.2017
  */
 public interface AppDataFacade {
-    AppData create(AppData entity);
+    AppDataDto create(AppDataDto entity);
 
-    AppData update(AppData entity);
+    AppDataDto update(AppDataDto entity);
 
-    void remove(AppData entity);
+    void remove(Long id);
 
-    AppData findById(Long id);
+    AppDataDto findById(Long id);
 
-    List<AppData> findAll();
+    List<AppDataDto> findAll();
 
-    AppData createWithExistenceCheck(AppData appData);
+    AppDataDto createWithExistenceCheck(AppDataDto appData);
 
-    List<AppData> findByDevice(String deviceId);
+    List<AppDataDto> findByDevice(String deviceId);
 }

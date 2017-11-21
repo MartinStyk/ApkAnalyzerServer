@@ -42,8 +42,8 @@ public class AppDataServiceImpl implements AppDataService {
     }
 
     @Override
-    public void remove(AppData appData) throws IllegalArgumentException {
-        appDataDao.remove(appData.getId());
+    public void remove(Long id) {
+        appDataDao.remove(id);
     }
 
     @Override
