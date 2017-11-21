@@ -69,7 +69,7 @@ public class PersistenceApplicationContext {
 
         String DATABASE_URL = System.getenv("DATABASE_URL");
 
-        logger.info("aa",DATABASE_URL);
+        logger.info(DATABASE_URL);
 
         if (DATABASE_URL == null) {
 
