@@ -1,6 +1,8 @@
 package sk.styk.martin.apkanalyzer;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +32,8 @@ import java.net.URL;
 @ComponentScan(basePackages = "sk.styk.martin.apkanalyzer.dao")
 public class PersistenceApplicationContext {
 
-    public final String DATABASE_URL = System.getProperty("DATABASE_URL");
+    private static final Logger logger = LoggerFactory.getLogger(PersistenceApplicationContext.class);
+
 
     @Bean
     public JpaTransactionManager transactionManager() {
@@ -61,6 +64,10 @@ public class PersistenceApplicationContext {
     @Bean
     @Primary
     public DataSource db() {
+
+        String DATABASE_URL = System.getenv("DATABASE_URL");
+
+        logger.info("aa",DATABASE_URL);
 
         if (DATABASE_URL == null) {
 
