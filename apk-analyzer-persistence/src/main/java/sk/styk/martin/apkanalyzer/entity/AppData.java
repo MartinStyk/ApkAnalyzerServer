@@ -99,6 +99,8 @@ public class AppData {
     private int activitiesAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "Activities", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> activityNames;
 
@@ -108,6 +110,8 @@ public class AppData {
     private int servicesAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "Services", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> serviceNames;
 
@@ -117,6 +121,8 @@ public class AppData {
     private int contentProvidersAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "ContentProviders", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> contentProviderNames;
 
@@ -126,6 +132,8 @@ public class AppData {
     private int broadcastReceiversAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "BroadcastReceivers", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> broadcastReceiverNames;
 
@@ -135,6 +143,8 @@ public class AppData {
     private int definedPermissionsAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "DefinedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> definedPermissions;
 
@@ -144,6 +154,8 @@ public class AppData {
     private int usedPermissionsAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "UsedPermissions", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> usedPermissions;
 
@@ -153,6 +165,8 @@ public class AppData {
     private int featuresAggregatedHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "Features", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> featureNames;
 
@@ -162,22 +176,26 @@ public class AppData {
     private String arscHash;
 
     @ElementCollection
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "DrawableFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> drawableHashes;
 
     @ElementCollection
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "LayoutFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> layoutHashes;
 
     @ElementCollection
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "AssetFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> assetHashes;
 
     @ElementCollection
-    @Fetch(FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SELECT)
+    @BatchSize(size=100)
     @CollectionTable(name = "OtherFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> otherHashes;
 
