@@ -18,6 +18,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -79,10 +81,10 @@ public class PersistenceApplicationContext {
                     .driverClassName("org.postgresql.Driver")
                     .build();
         } else {
-            URL url = null;
+            URI url = null;
             try {
-                url = new URL(DATABASE_URL);
-            } catch (MalformedURLException e) {
+                url = new URI(DATABASE_URL);
+            } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
 
