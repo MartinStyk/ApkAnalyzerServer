@@ -1,5 +1,6 @@
 package sk.styk.martin.apkanalyzer.dao;
 
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import sk.styk.martin.apkanalyzer.entity.AppData;
 

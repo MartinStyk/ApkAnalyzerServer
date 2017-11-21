@@ -1,5 +1,10 @@
 package sk.styk.martin.apkanalyzer.entity;
 
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.CollectionTable;
@@ -157,18 +162,22 @@ public class AppData {
     private String arscHash;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     @CollectionTable(name = "DrawableFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> drawableHashes;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     @CollectionTable(name = "LayoutFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> layoutHashes;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     @CollectionTable(name = "AssetFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> assetHashes;
 
     @ElementCollection
+    @Fetch(FetchMode.SUBSELECT)
     @CollectionTable(name = "OtherFiles", joinColumns = @JoinColumn(name = "appdata_id"))
     private List<String> otherHashes;
 
