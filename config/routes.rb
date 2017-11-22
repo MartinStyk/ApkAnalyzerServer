@@ -9,4 +9,6 @@ Rails.application.routes.draw do
     resources :layouts, only: [:index, :show]
     resources :other_files, only: [:index, :show]
   end
+
+  resources :usage, only: [:index]
 end
