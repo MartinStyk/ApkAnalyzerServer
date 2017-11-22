@@ -2,18 +2,24 @@ class AppRecordsController < ApplicationController
 
   # GET /app_records
   def index
-    @app_records = AppRecord.includes(:activity_names).all
-
+    @app_records = AppRecord.all
     json_response(@app_records)
   end
 
+  # GET /app_records/id
   def show
     json_response(AppRecord.find(params[:id]))
   end
 
   # POST /app_records
   def create
-    @app_record = AppRecordsService.new.save(app_record_params, params)
+    @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, params)
+
+    if @app_record.nil?
+      json_response("", :conflict)
+      return
+    end
+
     json_response(@app_record, :created)
   end
 
@@ -92,6 +98,26 @@ class AppRecordsController < ApplicationController
         :other_hashes,
         :package_classes,
     )
+        # .require(:android_id)
+        # .require(:android_id)
+        # .require(:package_name)
+        # .require(:version_code)
+        # .require(:apk_size)
+        # .require(:cert_md5)
+        # .require(:number_activities)
+        # .require(:number_services)
+        # .require(:number_content_providers)
+        # .require(:number_broadcast_receivers)
+        # .require(:number_defined_permissions)
+        # .require(:number_used_permissions)
+        # .require(:number_features)
+        # .require(:number_drawables)
+        # .require(:number_layouts)
+        # .require(:number_assets)
+        # .require(:number_others)
+        # .require(:number_package_classes)
+        # .require(:number_other_classes)
+
   end
 
 end

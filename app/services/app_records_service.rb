@@ -1,6 +1,11 @@
 class AppRecordsService
 
-  def save(app_record_params, params)
+  def save_with_duplicate_check(app_record_params, params)
+
+    if duplicate_check(app_record_params[:app_hash], app_record_params[:android_id])
+      return
+    end
+
     AppRecord.transaction do
       @app_record = AppRecord.create!(app_record_params)
 
@@ -36,5 +41,9 @@ class AppRecordsService
 
       @app_record
     end
+  end
+
+  def duplicate_check(app_hash, android_id)
+    AppRecord.exists?(app_hash: app_hash, android_id: android_id)
   end
 end
