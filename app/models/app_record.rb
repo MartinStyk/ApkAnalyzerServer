@@ -4,4 +4,5 @@ class AppRecord < ApplicationRecord
   has_many :layouts
   has_many :other_files
   has_many :permissions
+  has_many :features
 end

@@ -34,10 +34,16 @@ class AppRecordsService
       @app_record.other_files.import other_files, validate: false
 
       permissions = []
-      params[:used_permissions]&.each do |name|
+      params[:permissions]&.each do |name|
         permissions << Permission.new(:name => name)
       end
       @app_record.permissions.import permissions, validate: false
+
+      features = []
+      params[:features]&.each do |name|
+        features << Feature.new(:name => name)
+      end
+      @app_record.features.import features, validate: false
 
       @app_record
     end

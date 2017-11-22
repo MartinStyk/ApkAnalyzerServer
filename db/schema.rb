@@ -94,6 +94,12 @@ ActiveRecord::Schema.define(version: 20171121131030) do
     t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
   end
 
+  create_table "features", force: :cascade do |t|
+    t.string "name"
+    t.integer "app_record_id"
+    t.index ["app_record_id"], name: "index_features_on_app_record_id"
+  end
+
   create_table "layouts", force: :cascade do |t|
     t.string "file_hash"
     t.integer "app_record_id"

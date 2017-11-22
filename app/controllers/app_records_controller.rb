@@ -97,6 +97,8 @@ class AppRecordsController < ApplicationController
         :layout_hashes,
         :other_hashes,
         :package_classes,
+        :permissions,
+        :features
     )
         # .require(:android_id)
         # .require(:android_id)

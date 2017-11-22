@@ -24,5 +24,10 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
       t.string :name
       t.references :app_record
     end
+
+    create_table :features do |t|
+      t.string :name
+      t.references :app_record
+    end
   end
 end
