@@ -1,33 +1,24 @@
 class UsageController < ApplicationController
   before_action :authenticate
 
-  before_action :set_app_record_count
-  before_action :set_different_devices
-  before_action :set_different_apps
-  before_action :set_result_object
+  before_action :get_usage_data
 
   def index
-      json_response(@result)
+    json_response(@result)
   end
 
-
-  def set_app_record_count
-    @app_records = AppRecord.all.count
-  end
-
-  def set_different_devices
-    @different_devices = AppRecord.select("DISTINCT(app_records.android_id)").count;
-  end
-
-  def set_different_apps
-    @different_apps = AppRecord.select("DISTINCT(app_records.app_hash)").count;
-  end
-
-  def set_result_object
+  def get_usage_data
+    service = UsageStatisticsService.new
     @result = {}
-    @result[:app_records] = @app_records
-    @result[:different_devices] = @different_devices
-    @result[:different_apps] = @different_apps
+    @result[:app_records] = service.app_record_count
+    @result[:different_devices] = service.different_devices_count
+    @result[:different_apps] = service.different_apps_count
+    @result[:assets] = service.assets_count
+    @result[:drawables] = service.drawables_count
+    @result[:layouts] = service.layouts_count
+    @result[:other_files] = service.other_files_count
+    @result[:permissions] = service.permissions_count
+    @result[:features] = service.features_count
   end
 
 end
