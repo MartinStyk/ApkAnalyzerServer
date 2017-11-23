@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171121131030) do
+ActiveRecord::Schema.define(version: 20171122131030) do
 
   create_table "app_records", force: :cascade do |t|
     t.string "android_id"
@@ -116,6 +116,11 @@ ActiveRecord::Schema.define(version: 20171121131030) do
     t.string "name"
     t.integer "app_record_id"
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
   end
 
 end

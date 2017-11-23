@@ -1,4 +1,6 @@
 class UsageController < ApplicationController
+  before_action :authenticate
+
   before_action :set_app_record_count
   before_action :set_different_devices
   before_action :set_different_apps

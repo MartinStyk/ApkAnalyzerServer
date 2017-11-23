@@ -1,4 +1,6 @@
 class AppRecordsController < ApplicationController
+  before_action :authenticate, except: :create
+
 
   # GET /app_records
   def index
