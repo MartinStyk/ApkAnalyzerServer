@@ -15,7 +15,10 @@ class AppRecordsController < ApplicationController
 
   # POST /app_records
   def create
-    @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params, params)
+    @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params,
+                                                                  permission_params, feature_params,
+                                                                  asset_params, drawable_params, layout_params,
+                                                                  other_file_params)
 
     if @app_record.nil?
       json_response("", :conflict)
@@ -91,14 +94,7 @@ class AppRecordsController < ApplicationController
         :number_package_classes,
         :other_classes_aggregated_hash,
         :number_other_classes,
-        :asset_hashes,
-        :drawable_hashes,
-        :feature_names,
-        :layout_hashes,
-        :other_hashes,
         :package_classes,
-        :permissions,
-        :features,
     )
   end
 
@@ -107,5 +103,36 @@ class AppRecordsController < ApplicationController
     params.require(:android_id)
     params.permit(:analysis_mode, :android_id)
   end
+
+  def permission_params
+    array = params[:permissions]
+    array.nil? ? [] : array.map {|name| Permission.new(:name => name)}
+  end
+
+  def feature_params
+    array = params[:features]
+    array.nil? ? [] : array.map {|name| Feature.new(:name => name)}
+  end
+
+  def asset_params
+    array = params[:asset_hashes]
+    array.nil? ? [] : array.map {|name| Asset.new(:file_hash => name)}
+  end
+
+  def drawable_params
+    array = params[:drawable_hashes]
+    array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
+  end
+
+  def layout_params
+    array = params[:layout_hashes]
+    array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
+  end
+
+  def other_file_params
+    array = params[:other_hashes]
+    array.nil? ? [] : array.map {|name| OtherFile.new(:file_hash => name)}
+  end
+
 
 end

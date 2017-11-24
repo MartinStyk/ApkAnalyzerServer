@@ -1,6 +1,8 @@
 class AppRecordsService
-
-  def save_with_duplicate_check(app_record_params, upload_record_params, params)
+  def save_with_duplicate_check(app_record_params, upload_record_params,
+                                permission_params, feature_params,
+                                asset_params, drawable_params, layout_params,
+                                other_file_params)
 
     # if duplicate_check(app_record_params[:app_hash], app_record_params[:android_id])
     #   return
@@ -8,44 +10,14 @@ class AppRecordsService
 
     AppRecord.transaction do
       @app_record = AppRecord.find_or_create_by!(app_record_params)
-
       @upload_record = @app_record.upload_records.create!(upload_record_params)
 
-      assets = []
-      params[:asset_hashes]&.each do |hash|
-        assets << Asset.new(:file_hash => hash)
-      end
-      @app_record.assets.import assets, validate: false
-
-      drawables = []
-      params[:drawable_hashes]&.each do |hash|
-        drawables << Drawable.new(:file_hash => hash)
-      end
-      @app_record.drawables.import drawables, validate: false
-
-      layouts = []
-      params[:layout_hashes]&.each do |hash|
-        layouts << Layout.new(:file_hash => hash)
-      end
-      @app_record.layouts.import layouts, validate: false
-
-      other_files = []
-      params[:other_hashes]&.each do |hash|
-        other_files << OtherFile.new(:file_hash => hash)
-      end
-      @app_record.other_files.import other_files, validate: false
-
-      permissions = []
-      params[:permissions]&.each do |name|
-        permissions << Permission.new(:name => name)
-      end
-      @app_record.permissions.import permissions, validate: false
-
-      features = []
-      params[:features]&.each do |name|
-        features << Feature.new(:name => name)
-      end
-      @app_record.features.import features, validate: false
+      @app_record.assets.import asset_params, validate: false
+      @app_record.drawables.import drawable_params, validate: false
+      @app_record.layouts.import layout_params, validate: false
+      @app_record.other_files.import other_file_params, validate: false
+      @app_record.permissions.import permission_params, validate: false
+      @app_record.features.import feature_params, validate: false
 
       @app_record
     end
