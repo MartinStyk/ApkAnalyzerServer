@@ -15,7 +15,7 @@ class AppRecordsController < ApplicationController
 
   # POST /app_records
   def create
-    @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, params)
+    @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params, params)
 
     if @app_record.nil?
       json_response("", :conflict)
@@ -28,9 +28,7 @@ class AppRecordsController < ApplicationController
   def app_record_params
     # whitelist params
     params.permit(
-        :android_id,
         :app_hash,
-        :analysis_mode,
         :package_name,
         :application_name,
         :version_name,
@@ -100,28 +98,14 @@ class AppRecordsController < ApplicationController
         :other_hashes,
         :package_classes,
         :permissions,
-        :features
+        :features,
     )
-        # .require(:android_id)
-        # .require(:android_id)
-        # .require(:package_name)
-        # .require(:version_code)
-        # .require(:apk_size)
-        # .require(:cert_md5)
-        # .require(:number_activities)
-        # .require(:number_services)
-        # .require(:number_content_providers)
-        # .require(:number_broadcast_receivers)
-        # .require(:number_defined_permissions)
-        # .require(:number_used_permissions)
-        # .require(:number_features)
-        # .require(:number_drawables)
-        # .require(:number_layouts)
-        # .require(:number_assets)
-        # .require(:number_others)
-        # .require(:number_package_classes)
-        # .require(:number_other_classes)
+  end
 
+  def upload_record_params
+    params.require(:analysis_mode)
+    params.require(:android_id)
+    params.permit(:analysis_mode, :android_id)
   end
 
 end

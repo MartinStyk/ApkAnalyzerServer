@@ -1,4 +1,6 @@
 class AppRecord < ApplicationRecord
+  has_many :upload_records
+
   has_many :drawables
   has_many :assets
   has_many :layouts

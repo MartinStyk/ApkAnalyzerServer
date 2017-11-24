@@ -29,5 +29,13 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
       t.string :name
       t.references :app_record
     end
+
+    create_table :upload_records do |t|
+      t.string :android_id
+      t.string :analysis_mode
+      t.references :app_record
+      t.timestamp
+    end
+
   end
 end

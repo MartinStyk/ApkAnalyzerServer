@@ -1,13 +1,15 @@
 class AppRecordsService
 
-  def save_with_duplicate_check(app_record_params, params)
+  def save_with_duplicate_check(app_record_params, upload_record_params, params)
 
-    if duplicate_check(app_record_params[:app_hash], app_record_params[:android_id])
-      return
-    end
+    # if duplicate_check(app_record_params[:app_hash], app_record_params[:android_id])
+    #   return
+    # end
 
     AppRecord.transaction do
-      @app_record = AppRecord.create!(app_record_params)
+      @app_record = AppRecord.find_or_create_by!(app_record_params)
+
+      @upload_record = @app_record.upload_records.create!(upload_record_params)
 
       assets = []
       params[:asset_hashes]&.each do |hash|

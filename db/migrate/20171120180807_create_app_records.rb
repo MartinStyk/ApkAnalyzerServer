@@ -1,9 +1,7 @@
 class CreateAppRecords < ActiveRecord::Migration[5.1]
   def change
     create_table :app_records do |t|
-      t.string :android_id
       t.integer :app_hash
-      t.string :analysis_mode
       t.string :package_name
       t.string :application_name
       t.string :version_name
@@ -45,7 +43,6 @@ class CreateAppRecords < ActiveRecord::Migration[5.1]
       t.string :dex_hash
       t.string :arsc_hash
 
-
       t.integer :number_drawables
       t.integer :number_layouts
       t.integer :number_assets
@@ -76,7 +73,7 @@ class CreateAppRecords < ActiveRecord::Migration[5.1]
       t.integer :other_classes_aggregated_hash
       t.integer :number_other_classes
 
-      t.timestamps
+      t.index :app_hash
     end
   end
 end

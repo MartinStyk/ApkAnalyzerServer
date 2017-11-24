@@ -13,9 +13,7 @@
 ActiveRecord::Schema.define(version: 20171122131030) do
 
   create_table "app_records", force: :cascade do |t|
-    t.string "android_id"
     t.integer "app_hash"
-    t.string "analysis_mode"
     t.string "package_name"
     t.string "application_name"
     t.string "version_name"
@@ -78,8 +76,7 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.integer "number_package_classes"
     t.integer "other_classes_aggregated_hash"
     t.integer "number_other_classes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.index ["app_hash"], name: "index_app_records_on_app_hash"
   end
 
   create_table "assets", force: :cascade do |t|
@@ -116,6 +113,13 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.string "name"
     t.integer "app_record_id"
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
+  end
+
+  create_table "upload_records", force: :cascade do |t|
+    t.string "android_id"
+    t.string "analysis_mode"
+    t.integer "app_record_id"
+    t.index ["app_record_id"], name: "index_upload_records_on_app_record_id"
   end
 
   create_table "users", force: :cascade do |t|
