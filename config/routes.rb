@@ -9,5 +9,6 @@ Rails.application.routes.draw do
     resources :layouts, only: [:index, :show]
   end
 
+  resources :repackaged, only: [:show]
   resources :usage, only: [:index]
 end

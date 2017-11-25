@@ -39,6 +39,8 @@ end
 group :development do
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  gem 'better_errors'
+  gem "binding_of_caller"
 end
 
 group :production do
