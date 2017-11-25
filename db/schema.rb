@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.string "application_name"
     t.string "version_name"
     t.integer "version_code"
-    t.string "source"
     t.integer "apk_size"
     t.integer "min_sdk_version"
     t.integer "target_sdk_version"
@@ -26,12 +25,6 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.string "public_key_md5"
     t.string "cert_md5"
     t.integer "serial_number"
-    t.string "issuer_name"
-    t.string "issuer_organization"
-    t.string "issuer_country"
-    t.string "subject_name"
-    t.string "subject_organization"
-    t.string "subject_country"
     t.integer "number_activities"
     t.integer "activities_aggregated_hash"
     t.integer "number_services"
@@ -48,14 +41,18 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.integer "features_aggregated_hash"
     t.string "dex_hash"
     t.string "arsc_hash"
+    t.string "manifest_hash"
     t.integer "number_drawables"
     t.integer "number_layouts"
-    t.integer "number_assets"
-    t.integer "number_others"
-    t.integer "drawables_aggregated_hash"
+    t.integer "number_menus"
+    t.integer "number_files_total"
+    t.integer "number_pngs"
+    t.integer "number_pngs_with_different_name"
+    t.integer "number_xmls"
+    t.integer "number_xmls_with_different_name"
+    t.integer "pngs_aggregated_hash"
     t.integer "layouts_aggregated_hash"
-    t.integer "assets_aggregated_hash"
-    t.integer "other_aggregated_hash"
+    t.integer "menus_aggregated_hash"
     t.integer "number_different_drawables"
     t.integer "number_different_layouts"
     t.integer "png_drawables"
@@ -72,17 +69,10 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.integer "nodpi_drawables"
     t.integer "tvdpi_drawables"
     t.integer "unspecified_dpi_drawables"
-    t.integer "package_classes_aggregated_hash"
-    t.integer "number_package_classes"
-    t.integer "other_classes_aggregated_hash"
-    t.integer "number_other_classes"
+    t.integer "classes_aggregated_hash"
+    t.integer "total_number_of_classes"
+    t.integer "total_number_of_classes_without_inner_classes"
     t.index ["app_hash"], name: "index_app_records_on_app_hash"
-  end
-
-  create_table "assets", force: :cascade do |t|
-    t.string "file_hash"
-    t.integer "app_record_id"
-    t.index ["app_record_id"], name: "index_assets_on_app_record_id"
   end
 
   create_table "drawables", force: :cascade do |t|
@@ -103,10 +93,10 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.index ["app_record_id"], name: "index_layouts_on_app_record_id"
   end
 
-  create_table "other_files", force: :cascade do |t|
+  create_table "menus", force: :cascade do |t|
     t.string "file_hash"
     t.integer "app_record_id"
-    t.index ["app_record_id"], name: "index_other_files_on_app_record_id"
+    t.index ["app_record_id"], name: "index_menus_on_app_record_id"
   end
 
   create_table "permissions", force: :cascade do |t|
@@ -119,6 +109,7 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.string "android_id"
     t.string "analysis_mode"
     t.integer "app_record_id"
+    t.string "source"
     t.index ["app_record_id"], name: "index_upload_records_on_app_record_id"
   end
 

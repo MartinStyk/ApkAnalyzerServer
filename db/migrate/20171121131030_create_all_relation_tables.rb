@@ -10,12 +10,7 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
       t.references :app_record
     end
 
-    create_table :assets do |t|
-      t.string :file_hash
-      t.references :app_record
-    end
-
-    create_table :other_files do |t|
+    create_table :menus do |t|
       t.string :file_hash
       t.references :app_record
     end
@@ -34,6 +29,7 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
       t.string :android_id
       t.string :analysis_mode
       t.references :app_record
+      t.string :source
       t.timestamp
     end
 

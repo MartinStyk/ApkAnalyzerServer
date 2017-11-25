@@ -21,7 +21,7 @@ class UsageStatisticsService
   end
 
   def assets_count
-    Asset.all.count;
+    Menu.all.count;
   end
 
   def layouts_count

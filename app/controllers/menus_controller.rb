@@ -1,4 +1,4 @@
-class AssetsController < ApplicationController
+class MenusController < ApplicationController
   before_action :set_app_record
   before_action :set_app_record_asset, only: [:show]
 
@@ -7,9 +7,9 @@ class AssetsController < ApplicationController
     json_response(@app_record.assets)
   end
 
-  # GET /app_records/id/asset/id
+  # GET /app_records/id/@menu/id
   def show
-    json_response(@asset)
+    json_response(@menu)
   end
 
   def set_app_record
@@ -17,7 +17,7 @@ class AssetsController < ApplicationController
   end
 
   def set_app_record_asset
-    @asset = @app_record.assets.find_by!(id: params[:id]) if @app_record
+    @menu = @app_record.assets.find_by!(id: params[:id]) if @app_record
   end
 
 end

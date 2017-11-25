@@ -17,8 +17,7 @@ class AppRecordsController < ApplicationController
   def create
     @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params,
                                                                   permission_params, feature_params,
-                                                                  asset_params, drawable_params, layout_params,
-                                                                  other_file_params)
+                                                                  menu_params, drawable_params, layout_params)
 
     if @app_record.nil?
       json_response("", :conflict)
@@ -36,7 +35,6 @@ class AppRecordsController < ApplicationController
         :application_name,
         :version_name,
         :version_code,
-        :source,
         :apk_size,
         :min_sdk_version,
         :target_sdk_version,
@@ -44,12 +42,7 @@ class AppRecordsController < ApplicationController
         :public_key_md5,
         :cert_md5,
         :serial_number,
-        :issuer_name,
-        :issuer_organization,
-        :issuer_country,
-        :subject_name,
-        :subject_organization,
-        :subject_country,
+
         :number_activities,
         :activities_aggregated_hash,
         :number_services,
@@ -58,22 +51,33 @@ class AppRecordsController < ApplicationController
         :providers_aggregated_hash,
         :number_broadcast_receivers,
         :receivers_aggregated_hash,
+
         :number_defined_permissions,
         :defined_permissions_aggregated_hash,
+
         :number_used_permissions,
         :used_permissions_aggregated_hash,
+
         :number_features,
         :features_aggregated_hash,
+
         :dex_hash,
         :arsc_hash,
+        :manifest_hash,
+
         :number_drawables,
         :number_layouts,
-        :number_assets,
-        :number_others,
-        :drawables_aggregated_hash,
+        :number_menus,
+        :number_files_total,
+        :number_pngs,
+        :number_pngs_with_different_name,
+        :number_xmls,
+        :number_xmls_with_different_name,
+
+        :pngs_aggregated_hash,
         :layouts_aggregated_hash,
-        :assets_aggregated_hash,
-        :other_aggregated_hash,
+        :menus_aggregated_hash,
+
         :number_different_drawables,
         :number_different_layouts,
         :png_drawables,
@@ -90,18 +94,18 @@ class AppRecordsController < ApplicationController
         :nodpi_drawables,
         :tvdpi_drawables,
         :unspecified_dpi_drawables,
-        :package_classes_aggregated_hash,
-        :number_package_classes,
-        :other_classes_aggregated_hash,
-        :number_other_classes,
-        :package_classes,
+
+        :classes_aggregated_hash,
+        :total_number_of_classes,
+        :total_number_of_classes_without_inner_classes
     )
   end
 
   def upload_record_params
     params.require(:analysis_mode)
     params.require(:android_id)
-    params.permit(:analysis_mode, :android_id)
+    params.require(:source)
+    params.permit(:analysis_mode, :android_id, :source)
   end
 
   def permission_params
@@ -114,13 +118,13 @@ class AppRecordsController < ApplicationController
     array.nil? ? [] : array.map {|name| Feature.new(:name => name)}
   end
 
-  def asset_params
-    array = params[:asset_hashes]
-    array.nil? ? [] : array.map {|name| Asset.new(:file_hash => name)}
+  def menu_params
+    array = params[:menu_hashes]
+    array.nil? ? [] : array.map {|name| Menu.new(:file_hash => name)}
   end
 
   def drawable_params
-    array = params[:drawable_hashes]
+    array = params[:png_hashes]
     array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
   end
 
@@ -128,11 +132,5 @@ class AppRecordsController < ApplicationController
     array = params[:layout_hashes]
     array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
   end
-
-  def other_file_params
-    array = params[:other_hashes]
-    array.nil? ? [] : array.map {|name| OtherFile.new(:file_hash => name)}
-  end
-
 
 end
