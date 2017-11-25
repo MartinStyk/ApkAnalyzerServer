@@ -1,15 +1,17 @@
 class UsageStatisticsService
 
+  # Total number of uploaded apps
   def app_record_count
-    AppRecord.all.count
+    UploadRecord.all.count
+  end
+
+  # Number of distinct uploaded apps
+  def different_apps_count
+    AppRecord.all.count;
   end
 
   def different_devices_count
-    AppRecord.select("DISTINCT(app_records.android_id)").count;
-  end
-
-  def different_apps_count
-    AppRecord.select("DISTINCT(app_records.app_hash)").count;
+    UploadRecord.select("DISTINCT(upload_records.android_id)").count;
   end
 
   def permissions_count
@@ -20,7 +22,7 @@ class UsageStatisticsService
     Feature.all.count;
   end
 
-  def assets_count
+  def menus_count
     Menu.all.count;
   end
 
@@ -28,12 +30,8 @@ class UsageStatisticsService
     Layout.all.count;
   end
 
-  def drawables_count
+  def pngs_count
     Drawable.all.count;
-  end
-
-  def other_files_count
-    OtherFile.all.count;
   end
 
 end
