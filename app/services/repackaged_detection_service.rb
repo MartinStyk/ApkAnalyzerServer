@@ -1,5 +1,6 @@
 class RepackagedDetectionService
 
+
   def detection(app_record)
 
     # filter initial dataset based on metrics which are hard to obfuscate
@@ -12,18 +13,26 @@ class RepackagedDetectionService
                                  :total_number_of_classes_without_inner_classes => (app_record.total_number_of_classes_without_inner_classes * 0.8).round..(app_record.total_number_of_classes_without_inner_classes * 1.2).round)
                      .pluck(:id, :number_pngs, :number_layouts, :number_menus)
 
-    # candidates = AppRecord.all
-    #                  .pluck(:id, :number_pngs, :number_layouts, :number_menus)
+
+    candidates = AppRecord.all
+                     .pluck(:id, :number_pngs, :number_layouts, :number_menus)
+
+    # 8.times do
+    #   candidates = candidates + candidates
+    # end
 
     # among the results, similar apps based on
     repackaged_ids = []
     candidates.each do |candidate|
       #TODO hanlde when similarity_* is 0
-      similarity_drawables = [app_record.number_menus, candidate[1]].min > 0 ? Drawable.where(:app_record_id => candidate[0]).where(:app_record_id => app_record.id).count / [app_record.number_pngs, candidate[1]].min : 0
-      similarity_layouts = [app_record.number_menus, candidate[2]].min > 0 ? Layout.where(:app_record_id => candidate[0]).where(:app_record_id => app_record.id).count / [app_record.number_layouts, candidate[2]].min : 0
-      similarity_menus = [app_record.number_menus, candidate[3]].min > 0 ? Menu.where(:app_record_id => candidate[0]).where(:app_record_id => app_record.id).count / [app_record.number_menus, candidate[3]].min : 0
 
-      if similarity_drawables + similarity_layouts + similarity_menus > 0.623 * 3 #value taken according to paper
+      similarity_drawables = drawable_intersect_query(app_record.id, candidate[0]) / drawable_union_query(app_record.id, candidate[0]).to_f
+      # similarity_layouts = [app_record.number_layouts, candidate[2]].min > 0 ?
+      #                          Layout.where(:app_record_id => candidate[0]).select('file_hash').merge(Layout.where(:app_record_id => app_record.id).select('file_hash')).size.size / [app_record.number_layouts, candidate[2]].min.to_f : 0
+      # similarity_menus = [app_record.number_menus, candidate[3]].min > 0 ?
+      #                        Menu.where(:app_record_id => candidate[0]).select('file_hash').merge(Menu.where(:app_record_id => app_record.id).select('file_hash')).size / [app_record.number_menus, candidate[3]].min.to_f : 0
+
+      if similarity_drawables > 0.8 #value taken according to paper
         repackaged_ids << candidate[0]
       end
     end
@@ -39,6 +48,26 @@ class RepackagedDetectionService
     signatures.sort_by {|key, value| value.size}.reverse.to_h
 
     signatures
+  end
+
+
+  def drawable_intersect_query(id_1, id_2)
+    result = ActiveRecord::Base.connection.execute(" SELECT count(*)
+    FROM (
+             SELECT file_hash
+    FROM drawables
+    WHERE app_record_id = #{id_1}
+    INTERSECT
+    SELECT file_hash
+    FROM drawables
+    WHERE app_record_id = #{id_2}
+    );")
+
+    result[0][0]
+  end
+
+  def drawable_union_query(id_1, id_2)
+    Drawable.where(:app_record_id => [id_1, id_2]).distinct('app_hash').count
   end
 
 end
