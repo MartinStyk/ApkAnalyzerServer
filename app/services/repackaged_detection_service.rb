@@ -34,6 +34,7 @@ class RepackagedDetectionService
     repackaged.each do |record|
       signatures[record.cert_md5] = [] if signatures[record.cert_md5].nil?
       signatures[record.cert_md5] << record.id
+      #TODO handle counts from upload_record
     end
     signatures.sort_by {|key, value| value.size}.reverse.to_h
 
