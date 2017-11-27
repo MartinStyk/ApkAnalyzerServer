@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171122131030) do
+ActiveRecord::Schema.define(version: 20171127201030) do
 
   create_table "app_records", force: :cascade do |t|
     t.integer "app_hash"
@@ -103,6 +103,14 @@ ActiveRecord::Schema.define(version: 20171122131030) do
     t.string "name"
     t.integer "app_record_id"
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
+  end
+
+  create_table "similar_app_records", force: :cascade do |t|
+    t.integer "app_record_id", null: false
+    t.integer "app_record_similar_id", null: false
+    t.float "score"
+    t.index ["app_record_id"], name: "index_similar_app_records_on_app_record_id"
+    t.index ["app_record_similar_id"], name: "index_similar_app_records_on_app_record_similar_id"
   end
 
   create_table "upload_records", force: :cascade do |t|
