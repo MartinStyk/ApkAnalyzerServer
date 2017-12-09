@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171127201030) do
+ActiveRecord::Schema.define(version: 20171209101030) do
 
   create_table "app_records", force: :cascade do |t|
     t.integer "app_hash"
@@ -103,6 +103,15 @@ ActiveRecord::Schema.define(version: 20171127201030) do
     t.string "name"
     t.integer "app_record_id"
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
+  end
+
+  create_table "repacakged_detection_results", force: :cascade do |t|
+    t.integer "app_record_id"
+    t.string "android_id"
+    t.string "status"
+    t.float "percentage_same_signature"
+    t.float "percentage_majority_signature"
+    t.index ["app_record_id"], name: "index_repacakged_detection_results_on_app_record_id"
   end
 
   create_table "similar_app_records", force: :cascade do |t|
