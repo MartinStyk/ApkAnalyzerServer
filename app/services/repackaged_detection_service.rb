@@ -17,6 +17,8 @@ class RepackagedDetectionService
     # decide the result of detection and compute similarity metrics
     evaluate app_record
 
+    # create response
+    respond app_record
   end
 
   private
@@ -72,6 +74,19 @@ class RepackagedDetectionService
     sum_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
     @percentage_same_signature = @signatures_number_of_apps[app_record.cert_md5] / sum_repackaged_apps * 100
     @percentage_majority_signature = @signatures_number_of_apps.values[0] / sum_repackaged_apps * 100
+  end
+
+  def respond(app_record)
+    response = {}
+    response[:app_record_id] = app_record.id
+    response[:status] = @status
+    response[:percentage_majority_signature] = @percentage_majority_signature
+    response[:percentage_same_signature] = @percentage_same_signature
+    response[:signatures_number_of_apps] = @signatures_number_of_apps
+    response[:signatures_ids_of_apps] = @signatures_ids_of_apps
+    response[:similarity_scores] = SimilarAppRecord.find_by_app_record_id app_record.id
+
+    response
   end
 
 end
