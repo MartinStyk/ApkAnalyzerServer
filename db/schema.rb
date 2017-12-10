@@ -105,13 +105,16 @@ ActiveRecord::Schema.define(version: 20171209101030) do
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
   end
 
-  create_table "repacakged_detection_results", force: :cascade do |t|
+  create_table "repackaged_detection_results", force: :cascade do |t|
     t.integer "app_record_id"
-    t.string "android_id"
+    t.integer "upload_record_id"
     t.string "status"
+    t.integer "total_repackaged_apps"
+    t.integer "total_different_repackaged_apps"
     t.float "percentage_same_signature"
     t.float "percentage_majority_signature"
-    t.index ["app_record_id"], name: "index_repacakged_detection_results_on_app_record_id"
+    t.index ["app_record_id"], name: "index_repackaged_detection_results_on_app_record_id"
+    t.index ["upload_record_id"], name: "index_repackaged_detection_results_on_upload_record_id"
   end
 
   create_table "similar_app_records", force: :cascade do |t|

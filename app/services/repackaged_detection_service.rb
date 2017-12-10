@@ -71,20 +71,24 @@ class RepackagedDetectionService
     end
 
     #compute metrics
-    sum_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
-    @percentage_same_signature = @signatures_number_of_apps[app_record.cert_md5] / sum_repackaged_apps * 100
-    @percentage_majority_signature = @signatures_number_of_apps.values[0] / sum_repackaged_apps * 100
+    @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
+    @total_different_repackaged_apps = @signatures_ids_of_apps.values.count
+    @percentage_same_signature = @signatures_number_of_apps[app_record.cert_md5] /  @total_repackaged_apps * 100
+    @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
   end
 
   def respond_and_save_results(app_record)
     response = {}
     response[:app_record_id] = app_record.id
     response[:status] = @status
+    response[:total_repackaged_apps] = @total_repackaged_apps
+    response[:total_different_repackaged_apps] = @total_different_repackaged_apps
     response[:percentage_majority_signature] = @percentage_majority_signature
     response[:percentage_same_signature] = @percentage_same_signature
 
-    RepacakgedDetectionResult.create!(response)
+    RepackagedDetectionResult.create!(response)
 
+    # additional response data which are not saved
     response[:signatures_number_of_apps] = @signatures_number_of_apps
     response[:signatures_ids_of_apps] = @signatures_ids_of_apps
     response[:similarity_scores] = SimilarAppRecord.find_by_app_record_id app_record.id
