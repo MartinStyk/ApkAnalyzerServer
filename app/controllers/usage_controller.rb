@@ -1,6 +1,6 @@
 class UsageController < ApplicationController
-  before_action :authenticate
 
+  before_action :authenticate_admin
   before_action :get_usage_data
 
   def index

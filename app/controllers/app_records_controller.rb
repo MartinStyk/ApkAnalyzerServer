@@ -1,6 +1,7 @@
 class AppRecordsController < ApplicationController
-  before_action :authenticate, except: :create
 
+  before_action :authenticate_admin, except: :create
+#  before_action :authenticate_device, only: :create
 
   # GET /app_records
   def index

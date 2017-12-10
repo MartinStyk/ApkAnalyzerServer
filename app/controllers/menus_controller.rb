@@ -1,4 +1,6 @@
 class MenusController < ApplicationController
+
+  before_action :authenticate_admin
   before_action :set_app_record
   before_action :set_app_record_asset, only: [:show]
 

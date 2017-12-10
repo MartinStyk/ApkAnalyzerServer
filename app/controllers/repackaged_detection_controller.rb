@@ -1,5 +1,8 @@
 class RepackagedDetectionController < ApplicationController
 
+#  before_action :authenticate_admin, only: :show
+#  before_action :authenticate_device, only: :create
+
   before_action :initialize_service
 
   def show
