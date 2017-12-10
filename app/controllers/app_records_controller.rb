@@ -5,7 +5,7 @@ class AppRecordsController < ApplicationController
 
   # GET /app_records
   def index
-    @app_records = AppRecord.all
+    @app_records = query_params[:package_name].nil? ? AppRecord.all : AppRecord.where(package_name: query_params[:package_name])
     json_response(@app_records)
   end
 
@@ -132,6 +132,13 @@ class AppRecordsController < ApplicationController
   def layout_params
     array = params[:layout_hashes]
     array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
+  end
+
+  def query_params
+    # whitelist params
+    params.permit(
+        :package_name,
+    )
   end
 
 end
