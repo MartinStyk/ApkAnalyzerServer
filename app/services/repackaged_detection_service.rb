@@ -60,13 +60,13 @@ class RepackagedDetectionService
   def evaluate(app_record)
     #decide detection status
     if @signatures_number_of_apps.values.sum < 5
-      @status = 'Not Sufficient Data'
+      @status = :insufficient_data
     else
       if @signatures_number_of_apps.keys[0] == app_record.cert_md5 &&
           (@signatures_number_of_apps.keys[1].nil? || @signatures_number_of_apps.keys[0] > 1.3 * @signatures_number_of_apps.keys[1])
-        @status = 'OK'
+        @status = :ok
       else
-        @status = 'NOK'
+        @status = :nok
       end
     end
 

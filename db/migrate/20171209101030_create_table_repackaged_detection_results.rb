@@ -4,7 +4,7 @@ class CreateTableRepackagedDetectionResults < ActiveRecord::Migration[5.1]
       t.references :app_record
       t.references :upload_record
 
-      t.string :status
+      t.integer :status, default: 0
       t.integer :total_repackaged_apps
       t.integer :total_different_repackaged_apps
 

@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 20171209101030) do
   create_table "repackaged_detection_results", force: :cascade do |t|
     t.integer "app_record_id"
     t.integer "upload_record_id"
-    t.string "status"
+    t.integer "status", default: 0
     t.integer "total_repackaged_apps"
     t.integer "total_different_repackaged_apps"
     t.float "percentage_same_signature"
