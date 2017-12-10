@@ -37,7 +37,7 @@ class RepackagedDetectionQueriesService
   end
 
   def drawable_union_query(id_1, id_2)
-    Drawable.where(app_record_id: [id_1, id_2]).distinct('file_hash').count
+    Drawable.select("DISTINCT file_hash").where(app_record_id: [id_1, id_2]).count
   end
 
 end
