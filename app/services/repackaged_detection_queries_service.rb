@@ -15,7 +15,7 @@ class RepackagedDetectionQueriesService
   end
 
   def drawable_intersect_query(id_1, id_2)
-    result = ActiveRecord::Base.connection.execute(" SELECT count(*)
+    result = ActiveRecord::Base.connection.execute(" SELECT count(file_hash)
     FROM (
              SELECT file_hash
     FROM drawables
@@ -24,10 +24,16 @@ class RepackagedDetectionQueriesService
     SELECT file_hash
     FROM drawables
     WHERE app_record_id = #{id_2}
-    );")
-    result[0][0]
+    ) AS foo;")
 
-    # res_2 = (Drawable.where(app_record_id: id_1) & (Drawable.where(app_record_id: id_1))).size
+    # this works with sqlite
+    # result[0][0]
+
+    # this works with postgres
+    result.getvalue(0,0)
+
+    # this works as in memory check
+    # (Drawable.where(app_record_id: id_1) & (Drawable.where(app_record_id: id_1))).size
   end
 
   def drawable_union_query(id_1, id_2)

@@ -12,6 +12,10 @@
 
 ActiveRecord::Schema.define(version: 20171209101030) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "adminpack"
+
   create_table "app_records", force: :cascade do |t|
     t.integer "app_hash"
     t.string "package_name"
@@ -77,37 +81,37 @@ ActiveRecord::Schema.define(version: 20171209101030) do
 
   create_table "drawables", force: :cascade do |t|
     t.string "file_hash"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
   end
 
   create_table "features", force: :cascade do |t|
     t.string "name"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_features_on_app_record_id"
   end
 
   create_table "layouts", force: :cascade do |t|
     t.string "file_hash"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_layouts_on_app_record_id"
   end
 
   create_table "menus", force: :cascade do |t|
     t.string "file_hash"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_menus_on_app_record_id"
   end
 
   create_table "permissions", force: :cascade do |t|
     t.string "name"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_permissions_on_app_record_id"
   end
 
   create_table "repackaged_detection_results", force: :cascade do |t|
-    t.integer "app_record_id"
-    t.integer "upload_record_id"
+    t.bigint "app_record_id"
+    t.bigint "upload_record_id"
     t.integer "status", default: 0
     t.integer "total_repackaged_apps"
     t.integer "total_different_repackaged_apps"
@@ -128,7 +132,7 @@ ActiveRecord::Schema.define(version: 20171209101030) do
   create_table "upload_records", force: :cascade do |t|
     t.string "android_id"
     t.string "analysis_mode"
-    t.integer "app_record_id"
+    t.bigint "app_record_id"
     t.string "source"
     t.index ["app_record_id"], name: "index_upload_records_on_app_record_id"
   end

@@ -21,8 +21,12 @@ test:
   database: db/test.sqlite3
 
 development:
-  <<: *default
-  database: db/development.sqlite3
+#  <<: *default
+#  database: db/development.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  password: admin
+  username: postgres
 
 production:
   adapter: postgresql
