@@ -1,4 +1,4 @@
-class RepackagedController < ApplicationController
+class RepackagedDetectionController < ApplicationController
 
   before_action :initialize_service
 
