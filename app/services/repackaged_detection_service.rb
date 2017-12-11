@@ -91,7 +91,7 @@ class RepackagedDetectionService
     # additional response data which are not saved
     response[:signatures_number_of_apps] = @signatures_number_of_apps
     response[:signatures_ids_of_apps] = @signatures_ids_of_apps
-    response[:similarity_scores] = SimilarAppRecord.find_by_app_record_id app_record.id
+    response[:similarity_scores] = SimilarAppRecord.where(app_record_id: app_record.id).to_a
 
     response
   end
