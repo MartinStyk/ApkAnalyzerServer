@@ -3,24 +3,17 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
     create_table :drawables do |t|
       t.string :file_hash
       t.references :app_record
+
+      t.index :file_hash
     end
 
     create_table :layouts do |t|
       t.string :file_hash
       t.references :app_record
-    end
 
-    create_table :menus do |t|
-      t.string :file_hash
-      t.references :app_record
+      t.index :file_hash
     end
-
     create_table :permissions do |t|
-      t.string :name
-      t.references :app_record
-    end
-
-    create_table :features do |t|
       t.string :name
       t.references :app_record
     end

@@ -18,14 +18,6 @@ class UsageStatisticsService
     Permission.all.count;
   end
 
-  def features_count
-    Feature.all.count;
-  end
-
-  def menus_count
-    Menu.all.count;
-  end
-
   def layouts_count
     Layout.all.count;
   end

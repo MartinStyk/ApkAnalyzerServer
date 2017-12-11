@@ -83,24 +83,14 @@ ActiveRecord::Schema.define(version: 20171209101030) do
     t.string "file_hash"
     t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
-  end
-
-  create_table "features", force: :cascade do |t|
-    t.string "name"
-    t.bigint "app_record_id"
-    t.index ["app_record_id"], name: "index_features_on_app_record_id"
+    t.index ["file_hash"], name: "index_drawables_on_file_hash"
   end
 
   create_table "layouts", force: :cascade do |t|
     t.string "file_hash"
     t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_layouts_on_app_record_id"
-  end
-
-  create_table "menus", force: :cascade do |t|
-    t.string "file_hash"
-    t.bigint "app_record_id"
-    t.index ["app_record_id"], name: "index_menus_on_app_record_id"
+    t.index ["file_hash"], name: "index_layouts_on_file_hash"
   end
 
   create_table "permissions", force: :cascade do |t|

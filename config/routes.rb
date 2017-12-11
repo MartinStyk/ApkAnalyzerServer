@@ -4,9 +4,7 @@ Rails.application.routes.draw do
   resources :app_records, only: [:index, :show, :create] do
     resources :upload_records, only: [:index, :show]
     resources :permissions, only: [:index, :show]
-    resources :menus, only: [:index, :show]
     resources :drawables, only: [:index, :show]
-    resources :features, only: [:index, :show]
     resources :layouts, only: [:index, :show]
   end
 

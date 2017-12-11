@@ -17,8 +17,10 @@ default: &default
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: db/test.sqlite3
+    adapter: postgresql
+    encoding: unicode
+    password: admin
+    username: postgres
 
 development:
 #  <<: *default

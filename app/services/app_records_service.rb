@@ -2,8 +2,7 @@ class AppRecordsService
 
 
   def save_with_duplicate_check(app_record_params, upload_record_params,
-                                permission_params, feature_params,
-                                menu_params, drawable_params, layout_params)
+                                permission_params, drawable_params, layout_params)
 
     @app_record = get_if_exists app_record_params
 
@@ -14,9 +13,7 @@ class AppRecordsService
 
         @app_record.drawables.import drawable_params, validate: false
         @app_record.layouts.import layout_params, validate: false
-        @app_record.menus.import menu_params, validate: false
         @app_record.permissions.import permission_params, validate: false
-        @app_record.features.import feature_params, validate: false
       end
 
       if @app_record.upload_records.exists?(android_id: upload_record_params[:android_id])

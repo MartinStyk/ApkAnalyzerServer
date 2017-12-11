@@ -17,8 +17,7 @@ class AppRecordsController < ApplicationController
   # POST /app_records
   def create
     @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params,
-                                                                  permission_params, feature_params,
-                                                                  menu_params, drawable_params, layout_params)
+                                                                  permission_params, drawable_params, layout_params)
 
     if @app_record.nil?
       json_response("", :conflict)
@@ -112,16 +111,6 @@ class AppRecordsController < ApplicationController
   def permission_params
     array = params[:permissions]
     array.nil? ? [] : array.map {|name| Permission.new(:name => name)}
-  end
-
-  def feature_params
-    array = params[:features]
-    array.nil? ? [] : array.map {|name| Feature.new(:name => name)}
-  end
-
-  def menu_params
-    array = params[:menu_hashes]
-    array.nil? ? [] : array.map {|name| Menu.new(:file_hash => name)}
   end
 
   def drawable_params
