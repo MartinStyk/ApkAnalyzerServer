@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :repackaged_results, only: [:index, :show]
 
   resources :usage, only: [:index]
+  resources :available, only: [:index]
+
 end
