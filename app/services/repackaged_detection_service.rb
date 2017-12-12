@@ -12,7 +12,7 @@ class RepackagedDetectionService
     @signatures_number_of_apps = signature_to_number_of_apps
 
     # create hash signature -> ids of apps
-    @signatures_ids_of_apps = signature_to_ids_of_apps
+    @signatures_of_apps = signature_to_apps
 
     # decide the result of detection and compute similarity metrics
     evaluate app_record
@@ -25,7 +25,7 @@ class RepackagedDetectionService
 
   def signature_to_number_of_apps
     signatures = Hash.new(0)
-    @repackaged_ids_certificate.each do |id, certificate|
+    @repackaged_ids_certificate.each do |id, package_name, certificate|
       signatures[certificate] += UploadRecord.where(app_record_id: id).count
     end
 
@@ -33,11 +33,11 @@ class RepackagedDetectionService
     signatures
   end
 
-  def signature_to_ids_of_apps
+  def signature_to_apps
     signatures = Hash.new()
-    @repackaged_ids_certificate.each do |id, certificate|
+    @repackaged_ids_certificate.each do |id, package_name, certificate|
       signatures[certificate] = [] if signatures[certificate].nil?
-      signatures[certificate] << id
+      signatures[certificate] << [id, package_name]
     end
 
     signatures
@@ -45,11 +45,11 @@ class RepackagedDetectionService
 
   def find_similar(app_record)
     repackaged_ids_certificate = []
-    @candidate_ids_certificate.each do |candidate_id, candidate_cert_md5|
+    @candidate_ids_certificate.each do |candidate_id, package_name, candidate_cert_md5|
       similarity_ratio_drawables = @query_service.drawable_intersect_query(app_record.id, candidate_id) / @query_service.drawable_union_query(app_record.id, candidate_id).to_f
 
       if similarity_ratio_drawables > 0.8
-        repackaged_ids_certificate << [candidate_id, candidate_cert_md5]
+        repackaged_ids_certificate << [candidate_id, package_name, candidate_cert_md5]
         SimilarAppRecord.find_or_create_by!(app_record: app_record, app_record_similar_id: candidate_id, score: similarity_ratio_drawables)
       end
     end
@@ -72,7 +72,7 @@ class RepackagedDetectionService
 
     #compute metrics
     @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
-    @total_different_repackaged_apps = @signatures_ids_of_apps.values.count
+    @total_different_repackaged_apps = @signatures_of_apps.values.count
     @percentage_same_signature = @signatures_number_of_apps[app_record.cert_md5] /  @total_repackaged_apps * 100
     @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
   end
@@ -90,7 +90,7 @@ class RepackagedDetectionService
 
     # additional response data which are not saved
     response[:signatures_number_of_apps] = @signatures_number_of_apps
-    response[:signatures_ids_of_apps] = @signatures_ids_of_apps
+    response[:signatures_of_apps] = @signatures_of_apps
     response[:similarity_scores] = SimilarAppRecord.where(app_record_id: app_record.id).to_a
 
     response

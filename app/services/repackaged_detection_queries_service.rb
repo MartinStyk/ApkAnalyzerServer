@@ -11,7 +11,7 @@ class RepackagedDetectionQueriesService
                     :number_files_total => (app_record.number_files_total * 0.8).round..(app_record.number_files_total * 1.2).round,
                     :total_number_of_classes => (app_record.total_number_of_classes * 0.8).round..(app_record.total_number_of_classes * 1.2).round,
                     :total_number_of_classes_without_inner_classes => (app_record.total_number_of_classes_without_inner_classes * 0.8).round..(app_record.total_number_of_classes_without_inner_classes * 1.2).round)
-                    .pluck(:id, :cert_md5)
+                    .pluck(:id, :package_name, :cert_md5)
   end
 
   def drawable_intersect_query(id_1, id_2)
