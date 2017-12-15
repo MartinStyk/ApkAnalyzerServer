@@ -38,8 +38,108 @@ class AppRecordsController < ApplicationController
     json_response(@app_record, :created)
   end
 
+  def upload_record_params
+    params.require(:analysis_mode)
+    params.require(:android_id)
+    params.require(:source)
+    params.permit(:analysis_mode, :android_id, :source)
+  end
+
+  def permission_params
+    array = params[:permissions]
+    array.nil? ? [] : array.map {|name| Permission.new(:name => name)}
+  end
+
+  def drawable_params
+    array = params[:png_hashes]
+    array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
+  end
+
+  def layout_params
+    array = params[:layout_hashes]
+    array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
+  end
+
+  def query_params
+    # whitelist params
+    params.permit(
+        :package_name,
+        :version_name,
+        :version_code,
+        :cert_md5,
+        :android_id
+    )
+  end
+
   def app_record_params
     # whitelist params
+    params.require(:app_hash)
+    params.require(:package_name)
+    params.require(:application_name)
+    params.require(:version_name)
+    params.require(:version_code)
+    params.require(:apk_size)
+    params.require(:sign_algorithm)
+    params.require(:public_key_md5)
+    params.require(:cert_md5)
+    params.require(:serial_number)
+
+    params.require(:number_activities)
+    params.require(:activities_aggregated_hash)
+    params.require(:number_services)
+    params.require(:services_aggregated_hash)
+    params.require(:number_content_providers)
+    params.require(:providers_aggregated_hash)
+    params.require(:number_broadcast_receivers)
+    params.require(:receivers_aggregated_hash)
+
+    params.require(:number_defined_permissions)
+    params.require(:defined_permissions_aggregated_hash)
+
+    params.require(:number_used_permissions)
+    params.require(:used_permissions_aggregated_hash)
+
+    params.require(:number_features)
+    params.require(:features_aggregated_hash)
+
+    params.require(:dex_hash)
+    params.require(:arsc_hash)
+    params.require(:manifest_hash)
+
+    params.require(:number_drawables)
+    params.require(:number_layouts)
+    params.require(:number_menus)
+    params.require(:number_files_total)
+    params.require(:number_pngs)
+    params.require(:number_pngs_with_different_name)
+    params.require(:number_xmls)
+    params.require(:number_xmls_with_different_name)
+
+    params.require(:pngs_aggregated_hash)
+    params.require(:layouts_aggregated_hash)
+    params.require(:menus_aggregated_hash)
+
+    params.require(:number_different_drawables)
+    params.require(:number_different_layouts)
+    params.require(:png_drawables)
+    params.require(:nine_patch_drawables)
+    params.require(:jpg_drawables)
+    params.require(:gif_drawables)
+    params.require(:xml_drawables)
+    params.require(:ldpi_drawables)
+    params.require(:mdpi_drawables)
+    params.require(:hdpi_drawables)
+    params.require(:xhdpi_drawables)
+    params.require(:xxhdpi_drawables)
+    params.require(:xxxhdpi_drawables)
+    params.require(:nodpi_drawables)
+    params.require(:tvdpi_drawables)
+    params.require(:unspecified_dpi_drawables)
+
+    params.require(:classes_aggregated_hash)
+    params.require(:total_number_of_classes)
+    params.require(:total_number_of_classes_without_inner_classes)
+
     params.permit(
         :app_hash,
         :package_name,
@@ -109,39 +209,6 @@ class AppRecordsController < ApplicationController
         :classes_aggregated_hash,
         :total_number_of_classes,
         :total_number_of_classes_without_inner_classes
-    )
-  end
-
-  def upload_record_params
-    params.require(:analysis_mode)
-    params.require(:android_id)
-    params.require(:source)
-    params.permit(:analysis_mode, :android_id, :source)
-  end
-
-  def permission_params
-    array = params[:permissions]
-    array.nil? ? [] : array.map {|name| Permission.new(:name => name)}
-  end
-
-  def drawable_params
-    array = params[:png_hashes]
-    array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
-  end
-
-  def layout_params
-    array = params[:layout_hashes]
-    array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
-  end
-
-  def query_params
-    # whitelist params
-    params.permit(
-        :package_name,
-        :version_name,
-        :version_code,
-        :cert_md5,
-        :android_id
     )
   end
 
