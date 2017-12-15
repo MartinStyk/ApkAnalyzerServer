@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171209101030) do
+ActiveRecord::Schema.define(version: 20171215101030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,8 @@ ActiveRecord::Schema.define(version: 20171209101030) do
     t.integer "total_different_repackaged_apps"
     t.float "percentage_same_signature"
     t.float "percentage_majority_signature"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["app_record_id"], name: "index_repackaged_detection_results_on_app_record_id"
     t.index ["upload_record_id"], name: "index_repackaged_detection_results_on_upload_record_id"
   end
@@ -124,6 +126,8 @@ ActiveRecord::Schema.define(version: 20171209101030) do
     t.string "analysis_mode"
     t.bigint "app_record_id"
     t.string "source"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["app_record_id"], name: "index_upload_records_on_app_record_id"
   end
 
