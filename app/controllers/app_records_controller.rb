@@ -5,7 +5,7 @@ class AppRecordsController < ApplicationController
 
   # GET /app_records
   def index
-    @app_records = query_params[:package_name].nil? ? AppRecord.all : AppRecord.where(package_name: query_params[:package_name])
+    @app_records = AppRecord.filter query_params
     json_response(@app_records)
   end
 
@@ -127,6 +127,10 @@ class AppRecordsController < ApplicationController
     # whitelist params
     params.permit(
         :package_name,
+        :version_name,
+        :version_code,
+        :cert_md5,
+        :android_id
     )
   end
 
