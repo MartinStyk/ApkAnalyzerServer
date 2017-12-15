@@ -14,6 +14,17 @@ class AppRecordsController < ApplicationController
     json_response(AppRecord.find(params[:id]))
   end
 
+  # GET /app_records/names
+  def names
+    json_response(AppRecord.names)
+  end
+
+  # GET /app_records/names_versions
+  def names_versions
+    json_response(AppRecord.names_and_versions)
+  end
+
+
   # POST /app_records
   def create
     @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params,

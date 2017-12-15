@@ -17,4 +17,7 @@ class AppRecord < ApplicationRecord
   scope :cert_md5, ->(cert_md5) {where cert_md5: cert_md5}
   scope :android_id, -> (android_id) {where id: UploadRecord.where(android_id: android_id)}
 
+  scope :names, -> {group(:package_name).order('count_package_name desc').count(:package_name)}
+  scope :names_and_versions, -> {group(:package_name, :version_code).order('count_package_name desc').count(:package_name)}
+
 end
