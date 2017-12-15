@@ -10,6 +10,14 @@ class UsageStatisticsService
     AppRecord.all.count;
   end
 
+  def different_package_names_count
+    AppRecord.names.count;
+  end
+
+  def different_package_name_and_version_count
+    AppRecord.names_and_versions.count;
+  end
+
   def different_devices_count
     UploadRecord.select("DISTINCT(upload_records.android_id)").count;
   end
