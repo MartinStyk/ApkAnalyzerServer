@@ -23,7 +23,7 @@ class CreateAllRelationTables < ActiveRecord::Migration[5.1]
       t.string :analysis_mode
       t.references :app_record
       t.string :source
-      t.timestamp
+      t.timestamps
     end
 
   end
