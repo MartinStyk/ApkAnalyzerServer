@@ -3,6 +3,9 @@ class AppRecordsController < ApplicationController
   before_action :authenticate_admin, except: :create
   before_action :authenticate_device, only: :create
 
+  before_action :check_apk_analyzer_version, only: :create
+
+
   # GET /app_records
   def index
     @app_records = AppRecord.filter query_params
@@ -58,6 +61,11 @@ class AppRecordsController < ApplicationController
   def layout_params
     array = params[:layout_hashes]
     array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
+  end
+
+  def apk_analyzer_version
+    params.require(:apk_analyzer_version)
+    params[:apk_analyzer_version]
   end
 
   def query_params
@@ -210,6 +218,16 @@ class AppRecordsController < ApplicationController
         :total_number_of_classes,
         :total_number_of_classes_without_inner_classes
     )
+  end
+
+  private
+
+  # check version of mobile client sending data
+  # this is the place to halt upload action if android client is not compatible with server
+  def check_apk_analyzer_version
+    if apk_analyzer_version < 12
+      json_response('Unsupported client version', :bad_request)
+    end
   end
 
 end
