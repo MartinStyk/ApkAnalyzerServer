@@ -11,7 +11,7 @@ class CreateAppRecords < ActiveRecord::Migration[5.1]
       t.integer :target_sdk_version
       t.string :sign_algorithm
       t.string :public_key_md5
-      t.string :cert_md5
+      t.string :certificate_hash
       t.integer :serial_number
 
       t.integer :number_activities

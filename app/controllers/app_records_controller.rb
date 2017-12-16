@@ -66,7 +66,7 @@ class AppRecordsController < ApplicationController
         :package_name,
         :version_name,
         :version_code,
-        :cert_md5,
+        :certificate_hash,
         :android_id
     )
   end
@@ -81,7 +81,7 @@ class AppRecordsController < ApplicationController
     params.require(:apk_size)
     params.require(:sign_algorithm)
     params.require(:public_key_md5)
-    params.require(:cert_md5)
+    params.require(:certificate_hash)
     params.require(:serial_number)
 
     params.require(:number_activities)
@@ -151,7 +151,7 @@ class AppRecordsController < ApplicationController
         :target_sdk_version,
         :sign_algorithm,
         :public_key_md5,
-        :cert_md5,
+        :certificate_hash,
         :serial_number,
 
         :number_activities,

@@ -14,7 +14,7 @@ class AppRecord < ApplicationRecord
   scope :package_name, -> (package_name) {where package_name: package_name}
   scope :version_name, ->(version_name) {where version_name: version_name}
   scope :version_code, ->(version_code) {where version_code: version_code}
-  scope :cert_md5, ->(cert_md5) {where cert_md5: cert_md5}
+  scope :certificate_hash, ->(certificate_hash) {where certificate_hash: certificate_hash}
   scope :android_id, -> (android_id) {where id: UploadRecord.where(android_id: android_id)}
 
   scope :names, -> {group(:package_name).order('count_package_name desc').count(:package_name)}

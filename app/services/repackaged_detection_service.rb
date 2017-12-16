@@ -45,11 +45,11 @@ class RepackagedDetectionService
 
   def find_similar(app_record)
     repackaged_ids_certificate = []
-    @candidate_ids_certificate.each do |candidate_id, package_name, candidate_cert_md5|
+    @candidate_ids_certificate.each do |candidate_id, package_name, candidate_certificate_hash|
       similarity_ratio_drawables = @query_service.drawable_intersect_query(app_record.id, candidate_id) / @query_service.drawable_union_query(app_record.id, candidate_id).to_f
 
       if similarity_ratio_drawables > 0.8
-        repackaged_ids_certificate << [candidate_id, package_name, candidate_cert_md5]
+        repackaged_ids_certificate << [candidate_id, package_name, candidate_certificate_hash]
         SimilarAppRecord.find_or_create_by!(app_record: app_record, app_record_similar_id: candidate_id, score: similarity_ratio_drawables)
       end
     end
@@ -62,7 +62,7 @@ class RepackagedDetectionService
     if @signatures_number_of_apps.values.sum < 5
       @status = :insufficient_data
     else
-      if @signatures_number_of_apps.keys[0] == app_record.cert_md5 &&
+      if @signatures_number_of_apps.keys[0] == app_record.certificate_hash &&
           (@signatures_number_of_apps.keys[1].nil? || @signatures_number_of_apps.keys[0] > 1.3 * @signatures_number_of_apps.keys[1])
         @status = :ok
       else
@@ -73,7 +73,7 @@ class RepackagedDetectionService
     #compute metrics
     @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
     @total_different_repackaged_apps = @signatures_of_apps.values.count
-    @percentage_same_signature = @signatures_number_of_apps[app_record.cert_md5] /  @total_repackaged_apps * 100
+    @percentage_same_signature = @signatures_number_of_apps[app_record.certificate_hash] /  @total_repackaged_apps * 100
     @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
   end
 
