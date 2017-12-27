@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171209101030) do
+ActiveRecord::Schema.define(version: 20171227191030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,13 +84,6 @@ ActiveRecord::Schema.define(version: 20171209101030) do
     t.bigint "app_record_id"
     t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
     t.index ["file_hash"], name: "index_drawables_on_file_hash"
-  end
-
-  create_table "layouts", force: :cascade do |t|
-    t.string "file_hash"
-    t.bigint "app_record_id"
-    t.index ["app_record_id"], name: "index_layouts_on_app_record_id"
-    t.index ["file_hash"], name: "index_layouts_on_file_hash"
   end
 
   create_table "permissions", force: :cascade do |t|
