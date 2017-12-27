@@ -31,7 +31,7 @@ class AppRecordsController < ApplicationController
   # POST /app_records
   def create
     @app_record = AppRecordsService.new.save_with_duplicate_check(app_record_params, upload_record_params,
-                                                                  permission_params, drawable_params, layout_params)
+                                                                  permission_params, drawable_params)
 
     if @app_record.nil?
       json_response("", :conflict)
@@ -56,11 +56,6 @@ class AppRecordsController < ApplicationController
   def drawable_params
     array = params[:png_hashes]
     array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
-  end
-
-  def layout_params
-    array = params[:layout_hashes]
-    array.nil? ? [] : array.map {|name| Layout.new(:file_hash => name)}
   end
 
   def apk_analyzer_version

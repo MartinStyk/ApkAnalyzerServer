@@ -16,7 +16,6 @@ class UsageController < ApplicationController
     @result[:different_package_names] = service.different_package_names_count
     @result[:different_package_name_and_version_count] = service.different_package_name_and_version_count
     @result[:pngs] = service.pngs_count
-    @result[:layouts] = service.layouts_count
     @result[:permissions] = service.permissions_count
   end
 

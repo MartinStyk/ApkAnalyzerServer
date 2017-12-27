@@ -2,7 +2,7 @@ class AppRecordsService
 
 
   def save_with_duplicate_check(app_record_params, upload_record_params,
-                                permission_params, drawable_params, layout_params)
+                                permission_params, drawable_params)
 
     @app_record = get_if_exists app_record_params
 
@@ -12,7 +12,6 @@ class AppRecordsService
         @app_record = AppRecord.create! app_record_params
 
         @app_record.drawables.import drawable_params, validate: false
-        @app_record.layouts.import layout_params, validate: false
         @app_record.permissions.import permission_params, validate: false
       end
 

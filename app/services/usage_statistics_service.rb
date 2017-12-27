@@ -26,10 +26,6 @@ class UsageStatisticsService
     Permission.all.count;
   end
 
-  def layouts_count
-    Layout.all.count;
-  end
-
   def pngs_count
     Drawable.all.count;
   end
