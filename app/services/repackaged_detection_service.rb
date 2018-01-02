@@ -63,7 +63,7 @@ class RepackagedDetectionService
       @status = :insufficient_data
     else
       if @signatures_number_of_apps.keys[0] == app_record.certificate_hash &&
-          (@signatures_number_of_apps.keys[1].nil? || @signatures_number_of_apps.keys[0] > 1.3 * @signatures_number_of_apps.keys[1])
+          (@signatures_number_of_apps.keys[1].nil? || @signatures_number_of_apps.values[0] > 1.3 * @signatures_number_of_apps.values[1])
         @status = :ok
       else
         @status = :nok
