@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     resources :drawables, only: [:index, :show]
   end
 
-  resources :repackaged_detection, only: [:show]
+  resources :repackaged_detection, only: [:show, :index]
   resources :repackaged_results, only: [:index, :show]
 
   resources :usage, only: [:index]
