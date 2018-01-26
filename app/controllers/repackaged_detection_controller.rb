@@ -1,9 +1,10 @@
 class RepackagedDetectionController < ApplicationController
 
-  # before_action :authenticate_admin, only: :show
-  # before_action :authenticate_device, only: :create
+  before_action :authenticate_admin, only: :show
+  before_action :authenticate_device, only: :index
 
   before_action :initialize_service
+
   before_action :init_app_record_by_id, only: :show
   before_action :init_app_record_by_hash, only: :index
 
