@@ -44,11 +44,14 @@ class RepackagedDetectionService
   end
 
   def find_similar(app_record)
+    similarity_threshold = 0.8
+
     repackaged_ids_certificate = []
+
     @candidate_ids_certificate.each do |candidate_id, package_name, candidate_certificate_hash|
       similarity_ratio_drawables = @query_service.drawable_intersect_query(app_record.id, candidate_id) / @query_service.drawable_union_query(app_record.id, candidate_id).to_f
 
-      if similarity_ratio_drawables > 0.8
+      if similarity_ratio_drawables > similarity_threshold
         repackaged_ids_certificate << [candidate_id, package_name, candidate_certificate_hash]
         SimilarAppRecord.find_or_create_by!(app_record: app_record, app_record_similar_id: candidate_id, score: similarity_ratio_drawables)
       end
