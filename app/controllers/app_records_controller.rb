@@ -55,7 +55,7 @@ class AppRecordsController < ApplicationController
 
   def drawable_params
     array = params[:png_hashes]
-    array.nil? ? [] : array.map {|name| Drawable.new(:file_hash => name)}
+    array.nil? ? [] : array.map {|entry| Drawable.new(file_hash: entry[:hash], file_name: entry[:path])}
   end
 
   def apk_analyzer_version
