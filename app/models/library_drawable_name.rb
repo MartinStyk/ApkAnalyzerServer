@@ -1,2 +1,0 @@
-class LibraryDrawableName < ApplicationRecord
-end

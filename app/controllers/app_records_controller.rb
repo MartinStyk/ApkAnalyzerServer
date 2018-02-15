@@ -105,9 +105,9 @@ class AppRecordsController < ApplicationController
     params.require(:number_features)
     params.require(:features_aggregated_hash)
 
-    params.require(:dex_hash)
-    params.require(:arsc_hash)
-    params.require(:manifest_hash)
+    # params.require(:dex_hash)
+    # params.require(:arsc_hash)
+    # params.require(:manifest_hash)
 
     params.require(:number_drawables)
     params.require(:number_layouts)
