@@ -100,11 +100,6 @@ ActiveRecord::Schema.define(version: 20180215090530) do
     t.index ["file_hash"], name: "index_library_drawable_hashes_on_file_hash", unique: true
   end
 
-  create_table "library_drawable_names", force: :cascade do |t|
-    t.string "file_name"
-    t.index ["file_name"], name: "index_library_drawable_names_on_file_name", unique: true
-  end
-
   create_table "permissions", force: :cascade do |t|
     t.string "name"
     t.bigint "app_record_id"
