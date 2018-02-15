@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208160530) do
+ActiveRecord::Schema.define(version: 20180215090530) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,24 @@ ActiveRecord::Schema.define(version: 20180208160530) do
     t.string "file_name"
     t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
     t.index ["file_hash"], name: "index_drawables_on_file_hash"
+  end
+
+  create_table "filtered_drawables", force: :cascade do |t|
+    t.string "file_hash"
+    t.string "file_name"
+    t.bigint "app_record_id"
+    t.index ["app_record_id"], name: "index_filtered_drawables_on_app_record_id"
+    t.index ["file_hash"], name: "index_filtered_drawables_on_file_hash"
+  end
+
+  create_table "library_drawable_hashes", force: :cascade do |t|
+    t.string "file_hash"
+    t.index ["file_hash"], name: "index_library_drawable_hashes_on_file_hash", unique: true
+  end
+
+  create_table "library_drawable_names", force: :cascade do |t|
+    t.string "file_name"
+    t.index ["file_name"], name: "index_library_drawable_names_on_file_name", unique: true
   end
 
   create_table "permissions", force: :cascade do |t|

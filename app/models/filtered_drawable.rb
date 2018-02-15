@@ -1,0 +1,2 @@
+class FilteredDrawable < ApplicationRecord
+end

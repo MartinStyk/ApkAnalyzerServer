@@ -4,6 +4,7 @@ class AppRecord < ApplicationRecord
   has_many :upload_records
 
   has_many :drawables
+  has_many :filtered_drawables
   has_many :permissions
 
   has_many(:similar_app_records, foreign_key: :app_record_id, dependent: :destroy)

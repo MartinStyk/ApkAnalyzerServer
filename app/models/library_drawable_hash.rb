@@ -1,0 +1,2 @@
+class LibraryDrawableHash < ApplicationRecord
+end
