@@ -54,7 +54,7 @@ class AppRecordsController < ApplicationController
   end
 
   def drawable_params
-    array = params[:png_hashes]
+    array = params[:drawable_hashes]
     array.nil? ? [] : array.map {|entry| Drawable.new(file_hash: entry[:hash], file_name: entry[:path])}
   end
 
@@ -109,16 +109,16 @@ class AppRecordsController < ApplicationController
     # params.require(:arsc_hash)
     # params.require(:manifest_hash)
 
-    params.require(:number_drawables)
+    params.require(:number_drawables_by_folder)
     params.require(:number_layouts)
     params.require(:number_menus)
     params.require(:number_files_total)
-    params.require(:number_pngs)
+    params.require(:number_drawables_by_extension)
     params.require(:number_pngs_with_different_name)
     params.require(:number_xmls)
     params.require(:number_xmls_with_different_name)
 
-    params.require(:pngs_aggregated_hash)
+    params.require(:drawables_aggregated_hash)
     params.require(:layouts_aggregated_hash)
     params.require(:menus_aggregated_hash)
 
@@ -179,16 +179,16 @@ class AppRecordsController < ApplicationController
         :arsc_hash,
         :manifest_hash,
 
-        :number_drawables,
+        :number_drawables_by_folder,
         :number_layouts,
         :number_menus,
         :number_files_total,
-        :number_pngs,
+        :number_drawables_by_extension,
         :number_pngs_with_different_name,
         :number_xmls,
         :number_xmls_with_different_name,
 
-        :pngs_aggregated_hash,
+        :drawables_aggregated_hash,
         :layouts_aggregated_hash,
         :menus_aggregated_hash,
 

@@ -9,7 +9,7 @@ class RepackagedDetectionQueriesService
 
     AppRecord.where(:number_xmls => (app_record.number_xmls * (1 -delta)).round..(app_record.number_xmls * (1 +delta)).round,
                     :number_xmls_with_different_name => (app_record.number_xmls_with_different_name * (1 -delta)).round..(app_record.number_xmls_with_different_name * (1 +delta)).round,
-                    :number_pngs => (app_record.number_pngs * (1 -delta)).round..(app_record.number_pngs * (1 +delta)).round,
+                    :number_drawables_by_extension => (app_record.number_drawables_by_extension * (1 -delta)).round..(app_record.number_drawables_by_extension * (1 +delta)).round,
                     :number_pngs_with_different_name => (app_record.number_pngs_with_different_name * (1 -delta)).round..(app_record.number_pngs_with_different_name * (1 +delta)).round,
                     :number_files_total => (app_record.number_files_total * (1 -delta)).round..(app_record.number_files_total * (1 +delta)).round,
                     :total_number_of_classes => (app_record.total_number_of_classes * (1 -delta)).round..(app_record.total_number_of_classes * (1 +delta)).round,

@@ -36,16 +36,16 @@ class CreateAppRecords < ActiveRecord::Migration[5.1]
       t.string :arsc_hash
       t.string :manifest_hash
 
-      t.integer :number_drawables
+      t.integer :number_drawables_by_folder
       t.integer :number_layouts
       t.integer :number_menus
       t.integer :number_files_total
-      t.integer :number_pngs
+      t.integer :number_drawables_by_extension
       t.integer :number_pngs_with_different_name
       t.integer :number_xmls
       t.integer :number_xmls_with_different_name
 
-      t.integer :pngs_aggregated_hash
+      t.integer :drawables_aggregated_hash
       t.integer :layouts_aggregated_hash
       t.integer :menus_aggregated_hash
 
