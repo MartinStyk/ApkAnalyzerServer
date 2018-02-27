@@ -220,7 +220,7 @@ class AppRecordsController < ApplicationController
   # check version of mobile client sending data
   # this is the place to halt upload action if android client is not compatible with server
   def check_apk_analyzer_version
-    if apk_analyzer_version < 12
+    if apk_analyzer_version < 24
       json_response('Unsupported client version', :bad_request)
     end
   end
