@@ -28,6 +28,11 @@ development:
   adapter: postgresql
   encoding: unicode
   password: admin
+  host: 127.0.0.1
+  port: 5432
+  sslmode: prefer
+  database: postgres
+  schema_search_path: apk_analyzer
   username: postgres
 
 production:
