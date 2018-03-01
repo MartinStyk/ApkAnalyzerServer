@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :upload_records, only: [:index, :show]
     resources :permissions, only: [:index, :show]
     resources :drawables, only: [:index, :show]
+    resources :filtered_drawables, only: [:index, :show]
   end
 
   resources :repackaged_detection, only: [:show, :index]
