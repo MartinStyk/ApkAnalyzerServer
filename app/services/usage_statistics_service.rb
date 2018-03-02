@@ -26,8 +26,16 @@ class UsageStatisticsService
     Permission.all.count;
   end
 
-  def pngs_count
+  def drawables_count
     Drawable.all.count;
+  end
+
+  def filtered_drawables_count
+    FilteredDrawable.all.count;
+  end
+
+  def library_drawable_hashes_count
+    LibraryDrawableHash.all.count;
   end
 
 end
