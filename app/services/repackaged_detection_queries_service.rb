@@ -21,11 +21,11 @@ class RepackagedDetectionQueriesService
     result = ActiveRecord::Base.connection.execute(" SELECT count(file_hash)
     FROM (
              SELECT file_hash
-    FROM drawables
+    FROM filtered_drawables
     WHERE app_record_id = #{id_1}
     INTERSECT
     SELECT file_hash
-    FROM drawables
+    FROM filtered_drawables
     WHERE app_record_id = #{id_2}
     ) AS foo;")
 
@@ -40,7 +40,7 @@ class RepackagedDetectionQueriesService
   end
 
   def drawable_union_query(id_1, id_2)
-    Drawable.select("DISTINCT file_hash").where(app_record_id: [id_1, id_2]).count
+    FilteredDrawable.select("DISTINCT file_hash").where(app_record_id: [id_1, id_2]).count
   end
 
 end

@@ -26,10 +26,6 @@ class UsageStatisticsService
     Permission.all.count;
   end
 
-  def drawables_count
-    Drawable.all.count;
-  end
-
   def filtered_drawables_count
     FilteredDrawable.all.count;
   end

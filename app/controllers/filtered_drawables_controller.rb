@@ -6,7 +6,7 @@ class FilteredDrawablesController < ApplicationController
 
   # GET /app_records/id/filtered_drawables
   def index
-    json_response(@app_record.drawables)
+    json_response(@app_record.filtered_drawables)
   end
 
   # GET /app_records/id/filtered_drawables/id

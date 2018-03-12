@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     get :names_versions, on: :collection
     resources :upload_records, only: [:index, :show]
     resources :permissions, only: [:index, :show]
-    resources :drawables, only: [:index, :show]
     resources :filtered_drawables, only: [:index, :show]
   end
 

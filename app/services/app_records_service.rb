@@ -11,7 +11,6 @@ class AppRecordsService
       if @app_record.nil?
         @app_record = AppRecord.create! app_record_params
 
-        @app_record.drawables.import drawable_params, validate: false
         @app_record.filtered_drawables.import filter_lib_drawables(drawable_params), validate: false
         @app_record.permissions.import permission_params, validate: false
       end

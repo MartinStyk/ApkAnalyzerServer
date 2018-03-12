@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180215090530) do
+ActiveRecord::Schema.define(version: 20180312191030) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,14 +77,6 @@ ActiveRecord::Schema.define(version: 20180215090530) do
     t.integer "total_number_of_classes"
     t.integer "total_number_of_classes_without_inner_classes"
     t.index ["app_hash"], name: "index_app_records_on_app_hash"
-  end
-
-  create_table "drawables", force: :cascade do |t|
-    t.string "file_hash"
-    t.bigint "app_record_id"
-    t.string "file_name"
-    t.index ["app_record_id"], name: "index_drawables_on_app_record_id"
-    t.index ["file_hash"], name: "index_drawables_on_file_hash"
   end
 
   create_table "filtered_drawables", force: :cascade do |t|

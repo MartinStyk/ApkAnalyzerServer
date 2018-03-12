@@ -3,7 +3,6 @@ class AppRecord < ApplicationRecord
 
   has_many :upload_records
 
-  has_many :drawables
   has_many :filtered_drawables
   has_many :permissions
 
