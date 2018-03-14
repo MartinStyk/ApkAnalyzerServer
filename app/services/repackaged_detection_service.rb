@@ -29,8 +29,7 @@ class RepackagedDetectionService
       signatures[certificate] += UploadRecord.where(app_record_id: id).count
     end
 
-    signatures.sort_by {|_key, value| value.size}.reverse.to_h
-    signatures
+    signatures.sort_by {|_key, value| value}.reverse.to_h
   end
 
   def signature_to_apps
@@ -77,7 +76,7 @@ class RepackagedDetectionService
     @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
     @total_different_repackaged_apps = @signatures_of_apps.values.count
     @percentage_same_signature = @signatures_number_of_apps[app_record.certificate_hash] /  @total_repackaged_apps * 100
-    @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
+    @percentage_majority_signature = (@signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100).round(2)
   end
 
   def respond_and_save_results(app_record)
