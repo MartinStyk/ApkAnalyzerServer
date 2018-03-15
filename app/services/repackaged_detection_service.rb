@@ -76,7 +76,7 @@ class RepackagedDetectionService
     @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
     @total_different_repackaged_apps = @signatures_of_apps.values.count
     @percentage_same_signature = @signatures_number_of_apps[app_record.certificate_hash] /  @total_repackaged_apps * 100
-    @percentage_majority_signature = (@signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100).round(2)
+    @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
   end
 
   def respond_and_save_results(app_record)
@@ -85,8 +85,8 @@ class RepackagedDetectionService
     response[:status] = @status
     response[:total_repackaged_apps] = @total_repackaged_apps
     response[:total_different_repackaged_apps] = @total_different_repackaged_apps
-    response[:percentage_majority_signature] = @percentage_majority_signature
-    response[:percentage_same_signature] = @percentage_same_signature
+    response[:percentage_majority_signature] = @percentage_majority_signature.round(2)
+    response[:percentage_same_signature] = @percentage_same_signature.round(2)
 
     RepackagedDetectionResult.create!(response)
 
