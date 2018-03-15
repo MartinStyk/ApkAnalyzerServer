@@ -83,8 +83,8 @@ class RepackagedDetectionService
     response = {}
     response[:app_record_id] = app_record.id
     response[:status] = @status
-    response[:total_repackaged_apps] = @total_repackaged_apps
-    response[:total_different_repackaged_apps] = @total_different_repackaged_apps
+    response[:total_similar_apps] = @total_repackaged_apps
+    response[:total_different_similar_apps] = @total_different_repackaged_apps
     response[:percentage_majority_signature] = @percentage_majority_signature.round(2)
     response[:percentage_same_signature] = @percentage_same_signature.round(2)
 
