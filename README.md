@@ -6,7 +6,7 @@
 |    app_record_upload_records |GET|  /app_records/:app_record_id/upload_records(.:format)         |upload_records#index|
 |     app_record_upload_record |GET|  /app_records/:app_record_id/upload_records/:id(.:format)     |upload_records#show|
 |       app_record_permissions |GET|  /app_records/:app_record_id/permissions(.:format)            |permissions#index|
-|        app_record_permission |GETv  /app_records/:app_record_id/permissions/:id(.:format)        |permissions#show|
+|        app_record_permission |GET|  /app_records/:app_record_id/permissions/:id(.:format)        |permissions#show|
 |app_record_filtered_drawables |GET|  /app_records/:app_record_id/filtered_drawables(.:format)     |filtered_drawables#index|
 | app_record_filtered_drawable |GET|  /app_records/:app_record_id/filtered_drawables/:id(.:format) |filtered_drawables#show|
 |                  app_records |GET|  /app_records(.:format)                                       |app_records#index|
