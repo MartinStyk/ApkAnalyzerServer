@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180312191030) do
+ActiveRecord::Schema.define(version: 20180321135230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "adminpack"
 
   create_table "app_records", force: :cascade do |t|
     t.integer "app_hash"
@@ -102,8 +101,8 @@ ActiveRecord::Schema.define(version: 20180312191030) do
     t.bigint "app_record_id"
     t.bigint "upload_record_id"
     t.integer "status", default: 0
-    t.integer "total_repackaged_apps"
-    t.integer "total_different_repackaged_apps"
+    t.integer "total_similar_apps"
+    t.integer "total_different_similar_apps"
     t.float "percentage_same_signature"
     t.float "percentage_majority_signature"
     t.index ["app_record_id"], name: "index_repackaged_detection_results_on_app_record_id"
