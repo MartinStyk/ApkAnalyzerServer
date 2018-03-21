@@ -19,12 +19,12 @@ class AppRecordsController < ApplicationController
 
   # GET /app_records/names
   def names
-    json_response(AppRecord.names)
+    json_response(AppRecord.names.first(100).to_h)
   end
 
   # GET /app_records/names_versions
   def names_versions
-    json_response(AppRecord.names_and_versions)
+    json_response(AppRecord.names_and_versions.first(100))
   end
 
 
