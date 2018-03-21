@@ -91,6 +91,7 @@ class RepackagedDetectionService
     RepackagedDetectionResult.create!(response)
 
     # additional response data which are not saved
+    response[:pairwise_evaluated_apps] = @candidate_ids_certificate.size
     response[:signatures_number_of_apps] = @signatures_number_of_apps
     response[:signatures_of_apps] = @signatures_of_apps
     response[:similarity_scores] = SimilarAppRecord.where(app_record_id: app_record.id).to_a
