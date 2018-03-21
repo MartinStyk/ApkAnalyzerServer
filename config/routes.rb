@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   end
 
   resources :repackaged_detection, only: [:show, :index]
-  resources :repackaged_results, only: [:index, :show]
+  resources :repackaged_results, only: [:index, :show] do
+    get :statistics, on: :collection
+  end
 
   resources :usage, only: [:index]
   resources :available, only: [:index]
