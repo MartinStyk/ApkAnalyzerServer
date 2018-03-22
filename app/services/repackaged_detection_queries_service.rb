@@ -20,17 +20,16 @@ class RepackagedDetectionQueriesService
 
 
   def compute_similarity(id_1, id_2)
-         # drawable_intersect_query(id_1, id_2) / drawable_union_query(id_1, id_2).to_f
-      super_query(id_1, id_2)
+    # drawable_intersect_query(id_1, id_2) / drawable_union_query(id_1, id_2).to_f
+    super_query(id_1, id_2)
   end
 
-  def super_query(id_1,id_2)
-    result = ActiveRecord::Base.connection.execute(" SELECT  (total_union - distinct_union) / distinct_union::float
-          FROM(
-                SELECT count(DISTINCT file_hash) as distinct_union, count(file_hash) as total_union
-    			FROM filtered_drawables
-    			WHERE app_record_id = #{id_1} OR app_record_id = #{id_2}
-  ) as alias")
+  def super_query(id_1, id_2)
+    result = ActiveRecord::Base.connection.execute(" SELECT  (total_union - distinct_union) / distinct_union::float FROM( " +
+                                                       "SELECT count(DISTINCT file_hash) as distinct_union, count(file_hash) as total_union " +
+                                                       "FROM filtered_drawables " +
+                                                       "WHERE app_record_id = #{id_1} OR app_record_id = #{id_2} " +
+                                                       ") as alias")
 
     # this works with sqlite
     # result[0][0]
