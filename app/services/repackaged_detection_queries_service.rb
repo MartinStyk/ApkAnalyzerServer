@@ -18,6 +18,30 @@ class RepackagedDetectionQueriesService
         .last(400)
   end
 
+
+  def compute_similarity(id_1, id_2)
+         # drawable_intersect_query(id_1, id_2) / drawable_union_query(id_1, id_2).to_f
+      super_query(id_1, id_2)
+  end
+
+  def super_query(id_1,id_2)
+    result = ActiveRecord::Base.connection.execute(" SELECT  (total_union - distinct_union) / distinct_union::float
+          FROM(
+                SELECT count(DISTINCT file_hash) as distinct_union, count(file_hash) as total_union
+    			FROM filtered_drawables
+    			WHERE app_record_id = #{id_1} OR app_record_id = #{id_2}
+  ) as alias")
+
+    # this works with sqlite
+    # result[0][0]
+
+    # this works with postgres
+    result.getvalue(0, 0)
+
+    # this works as in memory check
+    # (Drawable.where(app_record_id: id_1) & (Drawable.where(app_record_id: id_1))).size
+  end
+
   def drawable_intersect_query(id_1, id_2)
     result = ActiveRecord::Base.connection.execute(" SELECT count(file_hash)
     FROM (
