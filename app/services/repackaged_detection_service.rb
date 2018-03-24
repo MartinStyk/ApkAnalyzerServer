@@ -1,4 +1,25 @@
 class RepackagedDetectionService
+
+  # Look at repackaged detection results
+  # In case the detection was run in last 7 days, return its results
+  # Otherwise, run full detection
+  def detection_with_caching(app_record)
+
+    existing = RepackagedDetectionResult.find_by(app_record_id: app_record.id)
+
+    if !existing.nil? && existing.created_at > DateTime.now - 7
+
+      existing.total_detections += 1
+      existing.save
+
+      existing
+    else
+      detection(app_record)
+    end
+  end
+
+
+  # Full detection
   def detection(app_record)
     @query_service = RepackagedDetectionQueriesService.new
 
@@ -76,11 +97,12 @@ class RepackagedDetectionService
     #compute metrics
     @total_repackaged_apps = @signatures_number_of_apps.values.sum.to_f
     @total_different_repackaged_apps = @signatures_of_apps.values.count
-    @percentage_same_signature = @signatures_number_of_apps[app_record.certificate_hash] /  @total_repackaged_apps * 100
-    @percentage_majority_signature = @signatures_number_of_apps.values[0] /  @total_repackaged_apps * 100
+    @percentage_same_signature = @signatures_number_of_apps[app_record.certificate_hash] / @total_repackaged_apps * 100
+    @percentage_majority_signature = @signatures_number_of_apps.values[0] / @total_repackaged_apps * 100
   end
 
   def respond_and_save_results(app_record)
+
     response = {}
     response[:app_record_id] = app_record.id
     response[:status] = @status
@@ -88,8 +110,13 @@ class RepackagedDetectionService
     response[:total_different_similar_apps] = @total_different_repackaged_apps
     response[:percentage_majority_signature] = @percentage_majority_signature.round(2)
     response[:percentage_same_signature] = @percentage_same_signature.round(2)
+    response[:created_at] = DateTime.now
 
-    RepackagedDetectionResult.create!(response)
+    RepackagedDetectionResult.transaction do
+      detection_result = RepackagedDetectionResult.find_or_create_by!(app_record_id: app_record.id)
+      response[:total_detections] = detection_result.total_detections + 1
+      detection_result.update(response)
+    end
 
     # additional response data which are not saved
     response[:pairwise_evaluated_apps] = @candidate_ids_certificate.size

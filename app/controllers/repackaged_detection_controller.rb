@@ -1,5 +1,4 @@
 class RepackagedDetectionController < ApplicationController
-
   before_action :authenticate_admin, only: :show
   before_action :authenticate_device, only: :index
 
@@ -9,13 +8,11 @@ class RepackagedDetectionController < ApplicationController
   before_action :init_app_record_by_hash, only: :index
 
   def show
-    result = @repackaged_service.detection(@app_record)
-    json_response result
+    run_detection params[:cache]
   end
 
   def index
-    result = @repackaged_service.detection(@app_record)
-    json_response result
+    run_detection params[:cache]
   end
 
   private
@@ -32,4 +29,12 @@ class RepackagedDetectionController < ApplicationController
     @app_record = AppRecord.find_by_app_hash(params[:app_hash])
   end
 
+  def run_detection(cache)
+    result = if cache.nil? || cache == "true"
+               @repackaged_service.detection_with_caching(@app_record)
+             else
+               @repackaged_service.detection(@app_record)
+             end
+    json_response result
+  end
 end
