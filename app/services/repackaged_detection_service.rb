@@ -8,11 +8,7 @@ class RepackagedDetectionService
     existing = RepackagedDetectionResult.find_by(app_record_id: app_record.id)
 
     if !existing.nil? && existing.created_at > DateTime.now - 7
-
-      existing.total_detections += 1
-      existing.save
-
-      existing
+      handle_cached_results(app_record, existing)
     else
       detection(app_record)
     end
@@ -43,6 +39,20 @@ class RepackagedDetectionService
   end
 
   private
+
+  # Process cached results and compute requered response parameters
+  def handle_cached_results(app_record, repackaged_detection_result)
+
+    # find cached results of similar apps
+    @repackaged_ids_certificate = app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
+    @repackaged_ids_certificate << [app_record.id, app_record.package_name, app_record.certificate_hash]
+
+    # create hash signature -> number of apps
+    @signatures_number_of_apps = signature_to_number_of_apps
+
+    # create response
+    respond_and_update_cached repackaged_detection_result
+  end
 
   def signature_to_number_of_apps
     signatures = Hash.new(0)
@@ -126,5 +136,26 @@ class RepackagedDetectionService
 
     response
   end
+
+  def respond_and_update_cached(result)
+    # update detection number
+    result.total_detections += 1
+    result.save
+
+    response = {}
+    response[:app_record_id] = result.app_record_id
+    response[:status] = result.status
+    response[:total_similar_apps] = result.total_similar_apps
+    response[:total_different_similar_apps] = result.total_different_similar_apps
+    response[:percentage_majority_signature] = result.percentage_majority_signature.round(2)
+    response[:percentage_same_signature] = result.percentage_same_signature.round(2)
+    response[:total_detections] = result.total_detections + 1
+    response[:created_at] = result.created_at
+
+    response[:signatures_number_of_apps] = @signatures_number_of_apps
+
+    response
+  end
+
 
 end
