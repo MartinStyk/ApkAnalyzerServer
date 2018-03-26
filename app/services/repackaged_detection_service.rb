@@ -42,7 +42,7 @@ class RepackagedDetectionService
     evaluate app_record
 
     # create response
-    respond_and_save_results app_record
+    respond_and_save_results app_record, use_cached
   end
 
   private
@@ -104,8 +104,7 @@ class RepackagedDetectionService
     @percentage_majority_signature = @signatures_number_of_apps.values[0] / @total_repackaged_apps * 100
   end
 
-  def respond_and_save_results(app_record)
-
+  def respond_and_save_results(app_record, uses_cached = false)
     response = {}
     response[:app_record_id] = app_record.id
     response[:status] = @status
@@ -113,10 +112,10 @@ class RepackagedDetectionService
     response[:total_different_similar_apps] = @total_different_repackaged_apps
     response[:percentage_majority_signature] = @percentage_majority_signature.round(2)
     response[:percentage_same_signature] = @percentage_same_signature.round(2)
-    response[:created_at] = DateTime.now
 
     RepackagedDetectionResult.transaction do
       detection_result = RepackagedDetectionResult.find_or_create_by!(app_record_id: app_record.id)
+      response[:created_at] = uses_cached ? detection_result.created_at : DateTime.now
       response[:total_detections] = detection_result.total_detections + 1
       detection_result.update(response)
     end
