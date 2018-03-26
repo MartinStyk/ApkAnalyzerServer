@@ -7,23 +7,30 @@ class RepackagedDetectionService
 
     existing = RepackagedDetectionResult.find_by(app_record_id: app_record.id)
 
-    if !existing.nil? && existing.created_at > DateTime.now - 7
-      handle_cached_results(app_record, existing)
-    else
-      detection(app_record)
-    end
+    cached_data_available = !existing.nil? && existing.created_at > DateTime.now - 7
+
+    detection(app_record, cached_data_available)
   end
 
 
   # Full detection
-  def detection(app_record)
-    @query_service = RepackagedDetectionQueriesService.new
+  def detection(app_record, use_cached = false)
 
-    # filter initial dataset based on metrics which are hard to obfuscate
-    @candidate_ids_certificate = @query_service.filter_initial_dataset app_record
+    if use_cached
 
-    # find similar apps based on drawable similarity
-    @repackaged_ids_certificate = find_similar app_record
+      # find cached results of similar apps
+      @repackaged_ids_certificate = app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
+      @repackaged_ids_certificate << [app_record.id, app_record.package_name, app_record.certificate_hash]
+    else
+
+      @query_service = RepackagedDetectionQueriesService.new
+
+      # filter initial dataset based on metrics which are hard to obfuscate
+      @candidate_ids_certificate = @query_service.filter_initial_dataset app_record
+
+      # find similar apps based on drawable similarity
+      @repackaged_ids_certificate = find_similar app_record
+    end
 
     # create hash signature -> number of apps
     @signatures_number_of_apps = signature_to_number_of_apps
@@ -39,20 +46,6 @@ class RepackagedDetectionService
   end
 
   private
-
-  # Process cached results and compute requered response parameters
-  def handle_cached_results(app_record, repackaged_detection_result)
-
-    # find cached results of similar apps
-    @repackaged_ids_certificate = app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
-    @repackaged_ids_certificate << [app_record.id, app_record.package_name, app_record.certificate_hash]
-
-    # create hash signature -> number of apps
-    @signatures_number_of_apps = signature_to_number_of_apps
-
-    # create response
-    respond_and_update_cached repackaged_detection_result
-  end
 
   def signature_to_number_of_apps
     signatures = Hash.new(0)
@@ -129,33 +122,12 @@ class RepackagedDetectionService
     end
 
     # additional response data which are not saved
-    response[:pairwise_evaluated_apps] = @candidate_ids_certificate.size
+    response[:pairwise_evaluated_apps] = @candidate_ids_certificate.nil? ? 0 : @candidate_ids_certificate.size
     response[:signatures_number_of_apps] = @signatures_number_of_apps
     response[:signatures_of_apps] = @signatures_of_apps
     response[:similarity_scores] = SimilarAppRecord.where(app_record_id: app_record.id).to_a
 
     response
   end
-
-  def respond_and_update_cached(result)
-    # update detection number
-    result.total_detections += 1
-    result.save
-
-    response = {}
-    response[:app_record_id] = result.app_record_id
-    response[:status] = result.status
-    response[:total_similar_apps] = result.total_similar_apps
-    response[:total_different_similar_apps] = result.total_different_similar_apps
-    response[:percentage_majority_signature] = result.percentage_majority_signature.round(2)
-    response[:percentage_same_signature] = result.percentage_same_signature.round(2)
-    response[:total_detections] = result.total_detections + 1
-    response[:created_at] = result.created_at
-
-    response[:signatures_number_of_apps] = @signatures_number_of_apps
-
-    response
-  end
-
 
 end
