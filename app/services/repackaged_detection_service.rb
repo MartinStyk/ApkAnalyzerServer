@@ -46,7 +46,7 @@ class RepackagedDetectionService
     if use_cached
 
       # find cached results of similar apps
-      repackaged_ids_certificate = repackaged_ids_certificate + app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
+      repackaged_ids_certificate += app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
 
     else
 
@@ -56,7 +56,7 @@ class RepackagedDetectionService
 
         # no cached results - compute it hard way
         @candidate_ids_certificate = @query_service.filter_initial_dataset app_record
-        repackaged_ids_certificate = repackaged_ids_certificate + drawable_similarity_check(app_record)
+        repackaged_ids_certificate += drawable_similarity_check(app_record)
 
       else
 
