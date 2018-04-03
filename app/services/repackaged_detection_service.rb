@@ -7,30 +7,18 @@ class RepackagedDetectionService
 
     existing = RepackagedDetectionResult.find_by(app_record_id: app_record.id)
 
-    cached_data_available = !existing.nil? && existing.created_at > DateTime.now - 7
+    cached_data_available = !existing.nil? && existing.created_at > DateTime.now - 14
 
-    detection(app_record, cached_data_available)
+    detection(app_record, cached_data_available, existing)
   end
 
 
-  # Full detection
-  def detection(app_record, use_cached = false)
+  # Run detection
+  # Compute group of similar apps, decide detection status and return results
+  def detection(app_record, use_cached = false, existing_detection_result)
 
-    if use_cached
-
-      # find cached results of similar apps
-      @repackaged_ids_certificate = app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
-      @repackaged_ids_certificate << [app_record.id, app_record.package_name, app_record.certificate_hash]
-    else
-
-      @query_service = RepackagedDetectionQueriesService.new
-
-      # filter initial dataset based on metrics which are hard to obfuscate
-      @candidate_ids_certificate = @query_service.filter_initial_dataset app_record
-
-      # find similar apps based on drawable similarity
-      @repackaged_ids_certificate = find_similar app_record
-    end
+    # find group of similar apps and create hash app id -> certificate
+    @repackaged_ids_certificate = find_similar_apps(app_record, use_cached, existing_detection_result)
 
     # create hash signature -> number of apps
     @signatures_number_of_apps = signature_to_number_of_apps
@@ -46,6 +34,41 @@ class RepackagedDetectionService
   end
 
   private
+
+  # Finds the cluster of similar apps
+  # If cached results are available and valid (fresh), return it
+  # If cached results are available but not fresh, compute similarity of apps added after detection result was created
+  # If cached results are not available, run full detection
+  def find_similar_apps(app_record, use_cached = false, existing_detection_result)
+
+    repackaged_ids_certificate = [[app_record.id, app_record.package_name, app_record.certificate_hash]]
+
+    if use_cached
+
+      # find cached results of similar apps
+      repackaged_ids_certificate = repackaged_ids_certificate + app_record.similar_records.pluck(:id, :package_name, :certificate_hash)
+
+    else
+
+      @query_service = RepackagedDetectionQueriesService.new
+
+      if existing_detection_result.nil?
+
+        # no cached results - compute it hard way
+        @candidate_ids_certificate = @query_service.filter_initial_dataset app_record
+        repackaged_ids_certificate = repackaged_ids_certificate + drawable_similarity_check(app_record)
+
+      else
+
+        # compute pairwise similarity only for apps newer than most recent detection of this app
+        @candidate_ids_certificate = @query_service.filter_initial_dataset app_record, existing_detection_result[:created_at]
+        repackaged_ids_certificate = repackaged_ids_certificate + app_record.similar_records.pluck(:id, :package_name, :certificate_hash) + drawable_similarity_check(app_record)
+      end
+
+    end
+
+    repackaged_ids_certificate
+  end
 
   def signature_to_number_of_apps
     signatures = Hash.new(0)
@@ -66,11 +89,10 @@ class RepackagedDetectionService
     signatures
   end
 
-  def find_similar(app_record)
+  def drawable_similarity_check(app_record)
     similarity_threshold = 0.8
 
     repackaged_ids_certificate = []
-    repackaged_ids_certificate << [app_record.id, app_record.package_name, app_record.certificate_hash]
 
     @candidate_ids_certificate.each do |candidate_id, package_name, candidate_certificate_hash|
       similarity_ratio_drawables = @query_service.compute_similarity(app_record.id, candidate_id)

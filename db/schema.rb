@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180324145230) do
+ActiveRecord::Schema.define(version: 20180403135230) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 20180324145230) do
     t.integer "classes_aggregated_hash"
     t.integer "total_number_of_classes"
     t.integer "total_number_of_classes_without_inner_classes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["app_hash"], name: "index_app_records_on_app_hash"
   end
 
