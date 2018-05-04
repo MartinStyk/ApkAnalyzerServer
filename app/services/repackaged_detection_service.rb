@@ -15,7 +15,7 @@ class RepackagedDetectionService
 
   # Run detection
   # Compute group of similar apps, decide detection status and return results
-  def detection(app_record, use_cached = false, existing_detection_result)
+  def detection(app_record, use_cached = false, existing_detection_result = nil)
 
     # find group of similar apps and create hash app id -> certificate
     @repackaged_ids_certificate = find_similar_apps(app_record, use_cached, existing_detection_result)
